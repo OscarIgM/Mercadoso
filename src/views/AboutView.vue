@@ -1,4 +1,8 @@
+
+import NavBarPublic from '../components/NavBarPublic.vue';
 <template>
+
+<NavBarPublic></NavBarPublic>
   <div class="about">
     <h1>This is an about page</h1>
   </div>
@@ -13,3 +17,6 @@
   }
 }
 </style>
+<script setup>
+import NavBarPublic from '../components/NavBarPublic.vue';
+</script>
