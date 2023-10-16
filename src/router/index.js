@@ -20,6 +20,14 @@ const router = createRouter({
       path:'/CarritoView',
       name:'CarritoView',
       component:()=>import('../views/CarritoView.vue')
+    },{
+    path:'/LoginView',
+    name:'LoginView',
+    component:()=>import('../views/LoginView.vue')},
+    {
+      path:'/ProfileView',
+      name:'ProfileView',
+      component:()=>import('../views/ProfileView.vue')
     }
   ]
 })
