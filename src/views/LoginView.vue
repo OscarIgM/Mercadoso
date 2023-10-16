@@ -40,13 +40,13 @@
                     <div class="mb-3">
                         <label for="email" class="form-label" style="font-weight:bold;">Correo
                             electronico</label>
-                        <input type="email" id="email" v-model="email"
+                        <input type="email" id="email"
                             class="form-control border border-secondary rounded-0" required />
                         <div class="invalid-feedback">Porfavor ingresa tu correo electronico.</div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight:bold;">Contraseña</label>
-                        <input type="password" id="password" v-model="password"
+                        <input type="password" id="password"
                             class="form-control border border-secondary rounded-0" required />
                         <div class="invalid-feedback">Porfavor ingresa tu contraseña.</div>
                     </div>
@@ -68,3 +68,11 @@
 
 </div>
 </template>
+
+
+<style>
+#contenedor * {
+    font-family: 'Poppins', sans-serif;
+}
+
+</style>

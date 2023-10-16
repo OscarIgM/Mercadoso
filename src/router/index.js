@@ -28,6 +28,10 @@ const router = createRouter({
       path:'/ProfileView',
       name:'ProfileView',
       component:()=>import('../views/ProfileView.vue')
+    },{
+      path:'/MessageView',
+      name:'MessageView',
+      component:()=>import('../views/MessageView.vue')
     }
   ]
 })
