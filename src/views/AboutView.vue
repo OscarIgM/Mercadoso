@@ -1,5 +1,4 @@
 
-import NavBarPublic from '../components/NavBarPublic.vue';
 <template>
 
 <NavBarPublic></NavBarPublic>
