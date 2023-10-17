@@ -127,7 +127,6 @@
       import IconCarrito from './icons/IconCarrito.vue';
       import IconProfile from './icons/IconProfile.vue';
       import IconMiCompra from './icons/IconMiCompra.vue';
-      import IconMyPublication from './icons/IconMyPublication.vue';
       import IconPublish from './icons/IconPublish.vue';
     </script>
     

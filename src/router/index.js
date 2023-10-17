@@ -29,7 +29,10 @@ const router = createRouter({
       path:'/MessageView',
       name:'MessageView',
       component:()=>import('../views/MessageView.vue')
-    }
+    },{
+    path:'/MyPublish',
+    name:'MyPublish',
+    component:()=>import('../views/MyPublish.vue')}
   ]
 })
 
