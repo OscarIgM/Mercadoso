@@ -1,11 +1,17 @@
+
 <template>
+  
 <nav
       class="navbar navbar-expand-sm navbar-dark"
       style="background-color: black"
       data-bs-theme="dark"
     >
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Mercadoso</a>
+        <a
+              class="nav-link active"
+              :class="{ active: nombreActivo === 'HomepagePublic' }"
+              @click="navegar('HomepagePublic')"
+              >Mercadoso</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -50,37 +56,18 @@
             </button>
           </form>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
-           <IconPublish></IconPublish>     Publicar</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
-              <IconMyPublication></IconMyPublication> Mis publicaciones</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
-          <IconMessages>
-          </IconMessages>
-           Mensajes</a
-              >
-            </li>
+    
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">
              <IconCarrito></IconCarrito>   Ver carrito</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
-                <IconMiCompra></IconMiCompra>
-                Mis compras</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
-                >Perfil
+              <a
+              class="nav-link"
+              :class="{ active: nombreActivo === 'LoginView' }"
+              @click="navegar('LoginView')"
+              >Perfil
              <IconProfile></IconProfile>   </a>
             </li>
           </ul>
@@ -88,14 +75,32 @@
       </div>
     </nav>
 </template>
+<script>
+export default {
+  props: ["nombreActivo"],
+  methods: {
+    navegar(nombre) {
+      if (nombre === "LoginView") {
+        this.$router.push("/LoginView");
+      } else if (nombre === "MyPublish") {
+        this.$router.push("/ProfileView");
+      }
+      else if (nombre === "HomepagePublic"){
+        this.$router.push("/");
+      }
+    },
+  },
+};
+</script>
 <script setup>
-  import IconMessages from './icons/IconMessages.vue';
+import IconMessages from './icons/IconMessages.vue';
   import IconCarrito from './icons/IconCarrito.vue';
   import IconProfile from './icons/IconProfile.vue';
   import IconMiCompra from './icons/IconMiCompra.vue';
   import IconMyPublication from './icons/IconMyPublication.vue';
   import IconPublish from './icons/IconPublish.vue';
 </script>
+
 <style>
 .user-name{
     color: blue;

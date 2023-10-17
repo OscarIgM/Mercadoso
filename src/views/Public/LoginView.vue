@@ -1,34 +1,9 @@
+
 <template>
 
 <div id="contenedor">
 
-<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black;">
-    <div class="container">
-        <a class="navbar-brand text" href="./index.html" style="font-weight:bold;">Mercadoso</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="./product.html">Productos</a>
-                </li>
-                <form class="d-flex ms-5">
-                    <span class="input-group-text border border-0"
-                        style="background-color: black; color: white;"><i class="bi bi-search"></i></span>
-                    <input class="form-control me-2"
-                        style="width: 400px; background-color: black; color: white;" type="text"
-                        placeholder="Buscar">
-                </form>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item ms-auto">
-                    <a class="nav-link text-white"><router></router>Iniciar Sesion/ Registrarse</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    <NavBarPublic></NavBarPublic>
 
 <div class="container">
     <div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
@@ -69,7 +44,10 @@
 </div>
 </template>
 
+<script setup>
+import NavBarPublic from '../../components/NavBarPublic.vue';
 
+</script>
 <style>
 #contenedor * {
     font-family: 'Poppins', sans-serif;

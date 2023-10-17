@@ -9,6 +9,6 @@
 
     
   <script setup>
-import NavBarPublic from '../components/NavBarPublic.vue';
-import AnunciosCards from '../components/AnunciosCards.vue';
+import NavBarPublic from '../../components/NavBarPublic.vue';
+import AnunciosCards from '../../components/AnunciosCards.vue';
 </script>
