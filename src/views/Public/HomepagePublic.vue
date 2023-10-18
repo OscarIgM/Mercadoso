@@ -2,11 +2,7 @@
     <NavBarPublic>
     </NavBarPublic>
 <AnunciosCards></AnunciosCards>
-
     </template>
-    
-
-
     
   <script setup>
 import NavBarPublic from '../../components/NavBarPublic.vue';

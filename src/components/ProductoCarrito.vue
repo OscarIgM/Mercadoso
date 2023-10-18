@@ -2,8 +2,7 @@
        <div class="row">
                                 <div class="col-2">
                                     <img
-                                        src="imagenes.productos/Consola PlaySatation 5.webp"
-                                        style="width=130px">
+                                        src="imagenes.productos/Consola PlaySatation 5.webp" style="width: 100%;">
                                 </div>
                                 <div class="col-10" style="padding-left: 5%;">
                                     <h4>Consola PlaySattion 5</h4>

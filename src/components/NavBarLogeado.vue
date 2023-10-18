@@ -62,7 +62,7 @@
                   :class="{ active: nombreActivo === 'Mypublish' }"
                   @click="navegar('MyPublish')"
                   >
-               <IconPublish></IconPublish>     Publicar</a
+               <IconPublish></IconPublish>Publicar</a
                   >
                 </li>
                 <li class="nav-item">
@@ -93,17 +93,14 @@
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">
                     <IconMiCompra></IconMiCompra>
-                    Mis compras</a
-                  >
+                    Mis compras</a>
                 </li>
               </ul>         
                    <ProfileButton></ProfileButton>
-
             </div>
           </div>
         </nav>
 <ProfileConfiguration></ProfileConfiguration>
-      
     </template>
     <script>
     export default {
@@ -133,7 +130,6 @@
       import ProfileButton from './ProfileButton.vue';
       import ProfileConfiguration from './ProfileConfiguration.vue';
     </script>
-    
     <style>
     .user-name{
         color: blue;
@@ -147,6 +143,4 @@
         border-left: none;
         border-bottom: 2px solid #dee2e6;
     }
-    
-    
     </style>
