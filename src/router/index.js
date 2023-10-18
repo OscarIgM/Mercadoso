@@ -32,7 +32,11 @@ const router = createRouter({
     },{
     path:'/MyPublish',
     name:'MyPublish',
-    component:()=>import('../views/MyPublish.vue')}
+    component:()=>import('../views/MyPublish.vue')},
+    {
+      path:'/CarritoViewPublic',
+      name:'CarritoViewPublic',
+      component:()=>import('../views/Public/CarritoViewPublic.vue')}
   ]
 })
 

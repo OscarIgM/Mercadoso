@@ -58,13 +58,17 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+              <a
+              class="nav-link active"
+              :class="{ active: nombreActivo === 'CarritoViewPublic' }"
+              @click="navegar('CarritoViewPublic')"
+              >
              <IconCarrito></IconCarrito>   Ver carrito</a
               >
             </li>
             <li class="nav-item">
               <a
-              class="nav-link"
+              class="nav-link active"
               :class="{ active: nombreActivo === 'LoginView' }"
               @click="navegar('LoginView')"
               >Perfil
@@ -87,6 +91,9 @@ export default {
       }
       else if (nombre === "HomepagePublic"){
         this.$router.push("/");
+      }
+      else if (nombre === "CarritoViewPublic"){
+        this.$router.push("/CarritoViewPublic");
       }
     },
   },
