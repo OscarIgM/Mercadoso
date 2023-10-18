@@ -1,7 +1,6 @@
 <template>
 
-<NavBarPublic></NavBarPublic>
-
+<NavBarLogeado></NavBarLogeado>
 <div id="cuerpo">
                 <h1>Tu carrito de compras</h1>
                 <br>
@@ -70,7 +69,7 @@
 </template>
 
 <script setup>
-import NavBarPublic from '../components/NavBarPublic.vue';
+import NavBarLogeado from '../../components/NavBarLogeado.vue';
 
 </script>
 

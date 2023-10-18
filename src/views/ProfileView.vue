@@ -1,50 +1,7 @@
+
 <template>
      <div id="contenedor">
-
-<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black;">
-    <div class="container-fluid">
-        <a class="navbar-brand text" href="./index.html" style="font-weight:bold;">Mercadoso</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Productos</a>
-                </li>
-                <form class="d-flex">
-                    <span class="input-group-text border border-0"
-                        style="background-color: black; color: white;"><i class="bi bi-search"></i></span>
-                    <input class="form-control me-2"
-                        style="width: 230px; background-color: black; color: white;" type="text"
-                        placeholder="Buscar">
-                </form>
-            </ul>
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item ms-auto">
-                    <a class="nav-link text-white" href="#"><i class="bi bi-pencil-square"></i> Publicar</a>
-                </li>
-                <li class="nav-item ms-auto">
-                    <a class="nav-link text-white" href="#"><i class="bi bi-file-text"></i> Mis
-                        Publicaciones</a>
-                </li>
-                <li class="nav-item ms-auto">
-                    <a class="nav-link text-white" href="./messages.html"><i class="bi bi-chat"></i> Mensajes</a>
-                </li>
-                <li class="nav-item ms-auto">
-                    <a class="nav-link text-white" href="#"><i class="bi bi-cart"></i> Ver Carrito</a>
-                </li>
-                <li class="nav-item ms-auto">
-                    <a class="nav-link text-white" href="#"><i class="bi bi-bag"></i> Mis Compras</a>
-                </li>
-                <li class="nav-item ms-auto">
-                    <a class="nav-link text-white" href="#">Perfil <i class="bi bi-person-circle"></i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+<NavBarLogeado></NavBarLogeado>
 <div class="container">
     <div class="d-flex justify-content-center" style="height: 100vh;">
         <div class="col-3 mt-5">
@@ -150,3 +107,6 @@
 
 </div>
 </template>
+<script setup>
+import NavBarLogeado from '../components/NavBarLogeado.vue';
+</script>

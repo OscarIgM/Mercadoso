@@ -1,10 +1,6 @@
-
 <template>
-
 <div id="contenedor">
-
     <NavBarPublic></NavBarPublic>
-
 <div class="container">
     <div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
         <div class="row" style="width: 400px;">

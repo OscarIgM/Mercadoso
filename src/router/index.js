@@ -14,9 +14,9 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path:'/CarritoView',
-      name:'CarritoView',
-      component:()=>import('../views/CarritoView.vue')
+      path:'/CarritoLoggedView',
+      name:'CarritoLoggedView',
+      component:()=>import('../views/Logged/CarritoLoggedView.vue')
     },{
     path:'/LoginView',
     name:'LoginView',
@@ -36,7 +36,12 @@ const router = createRouter({
     {
       path:'/CarritoViewPublic',
       name:'CarritoViewPublic',
-      component:()=>import('../views/Public/CarritoViewPublic.vue')}
+      component:()=>import('../views/Public/CarritoViewPublic.vue')},
+      {
+        path:'/HomepageLogged',
+        name:'HomepageLogged',
+        component:()=>import('../views/Logged/HomepageLogged.vue')
+      }
   ]
 })
 
