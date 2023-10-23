@@ -1,7 +1,6 @@
 <template>
     <NavBarPublic>
     </NavBarPublic>
-
     <div class="row col-7 mx-auto gy-0 py-5">
 <AnunciosCards v-for="producto in productos"
 :nombre="producto.nombre"

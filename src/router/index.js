@@ -43,9 +43,9 @@ const router = createRouter({
         component:()=>import('../views/Logged/HomepageLogged.vue')
       },
       {
-        path:'/CalificacionCompra',
-        name:'CalificacionCompra',
-        component:()=>import('../views/CalificacionCompra.vue')
+        path:'/CalificacionCompraLogged',
+        name:'CalificacionCompraLogged',
+        component:()=>import('../views/Logged/CalificacionCompraLogged.vue')
       }
   ]
 })

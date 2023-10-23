@@ -4,8 +4,6 @@
                 <h1>Mis compras</h1>
                 <br>
                <CalificacionComponent></CalificacionComponent>
-
-                
                 <div class="d-grid gap-2 col-6 mx-auto" style="padding-top: 3%;">
                     <button class="btn btn-primary" type="button">Guardar
                         Calificacion</button>
