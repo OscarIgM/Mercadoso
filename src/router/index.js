@@ -14,9 +14,9 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path:'/CarritoLoggedView',
-      name:'CarritoLoggedView',
-      component:()=>import('../views/Logged/CarritoLoggedView.vue')
+      path:'/CarritoLogged',
+      name:'CarritoLogged',
+      component:()=>import('../views/Logged/CarritoLogged.vue')
     },{
     path:'/LoginView',
     name:'LoginView',
