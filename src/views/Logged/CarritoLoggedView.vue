@@ -9,7 +9,7 @@
                         <div class="row">
                             <div class="col-2">
                                 <img
-                                    src="imagenes.productos/Consola PlaySatation 5.webp"
+                                    src=""
                                     alt width="130 px">
                             </div>
                             <div class="col-10" style="padding-left: 5%;">
@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-2">
                                 <img
-                                    src="imagenes.productos/Consola PlaySatation 5.webp"
+                                    src=""
                                     alt width="130 px">
                             </div>
                             <div class="col-10" style="padding-left: 5%;">

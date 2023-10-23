@@ -8,8 +8,14 @@
                     <div class="row">
                         <div class="col-6">
                             <hr>
-                         <ProductoCarrito></ProductoCarrito>
-                        </div>
+                            <ProductoCarrito
+  v-for="producto in productos"
+  :imagenUrl="producto.imagenUrl"
+  :nombreProducto="producto.nombreProducto"
+  :precio="producto.valor"
+  :cantidad="producto.cantidad"
+/>
+                   </div>
                         <div class="col-4">
                             <h3>Detalles de la compra</h3>
                             <div class="row">
@@ -27,12 +33,36 @@
     
                 </div>
     </template>
-    
-    <script setup>
-    import NavBarPublic from '../../components/NavBarPublic.vue';
+
+    <script>
+export default {
+  data() {
+    return {
+      productos: [
+        {
+          "imagenUrl": "https://falabella.scene7.com/is/image/Falabella/15790950_1?wid=800&hei=800&qlt=70",
+          "nombreProducto": "Playstation 5",
+          "cantidad": "1",
+          "valor": "400.000"
+        },
+        {
+          "imagenUrl": "https://falabella.scene7.com/is/image/Falabella/15790950_1?wid=800&hei=800&qlt=70",
+          "nombreProducto": "Waren cigarro",
+          "cantidad": "1",
+          "valor": "400.000"
+        }
+      ]
+    };
+  }
+}
+
+</script>
+<script setup>
+import NavBarPublic from '../../components/NavBarPublic.vue';
 import ProductoCarrito from '../../components/ProductoCarrito.vue';
-    
-    </script>
+
+
+</script>
     
     <style>
     #contenedor {
