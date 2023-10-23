@@ -89,15 +89,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-3">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </div>
+                      <Pagination></Pagination>
                     </div>
                 </div>
             </div>
@@ -109,4 +101,5 @@
 </template>
 <script setup>
 import NavBarLogeado from '../components/NavBarLogeado.vue';
+import Pagination from '../components/Pagination.vue';
 </script>

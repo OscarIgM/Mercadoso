@@ -1,14 +1,13 @@
 <template>
   <NavBarLogeado></NavBarLogeado>
 
-            <div id="cuerpo">
+            <div id="body">
                 <h1>Tus publicaciones</h1>
                 <br>
                 <div class="row">
                     <div class="col-6">
                        <ProductoMyPublish></ProductoMyPublish>
                        <ProductoMyPublish></ProductoMyPublish>
-
                         <hr>
 
                     </div>

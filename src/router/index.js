@@ -9,11 +9,6 @@ const router = createRouter({
       component: HomepagePublic
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
-    },
-    {
       path:'/CarritoLogged',
       name:'CarritoLogged',
       component:()=>import('../views/Logged/CarritoLogged.vue')
@@ -46,7 +41,19 @@ const router = createRouter({
         path:'/CalificacionCompraLogged',
         name:'CalificacionCompraLogged',
         component:()=>import('../views/Logged/CalificacionCompraLogged.vue')
-      }
+      },
+      {
+      path:'/AnuncioProductoView',
+      name:'AnuncioProductoView',
+      component:()=>import('../views/AnuncioProductoView.vue')
+    },
+    {path:'/MyPurchases',
+  name: 'MyPurchases',
+component:()=>import('../views/MyPurchases.vue')},
+{path:'/CalificationsView',
+name:'CalificationsView',
+component:()=>import('../views/CalificationsView.vue')
+}
   ]
 })
 
