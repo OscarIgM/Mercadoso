@@ -43,9 +43,9 @@ const router = createRouter({
         component:()=>import('../views/Logged/CalificacionCompraLogged.vue')
       },
       {
-      path:'/AnuncioProductoView',
-      name:'AnuncioProductoView',
-      component:()=>import('../views/AnuncioProductoView.vue')
+      path:'/product/:id',
+      name:'ProductDetail',
+      component:()=>import('../views/ProductDetail.vue')
     },
     {path:'/MyPurchases',
   name: 'MyPurchases',
