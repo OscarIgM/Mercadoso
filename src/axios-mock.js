@@ -29,13 +29,13 @@ const productos = [
   },
   {
     id: 3,
-    nombre: "Libro Harry Potter y la piedra filosofal",
+    nombre: "PC MASTER RACE 2000",
     rating: 3.8,
     cant_rates: 101,
     descripcion:
-      "Autor: J.K Rowling Editorial:Salamandra Idioma: Español Nro Paginas: 288..",
+      "Corre el minecraft a 4k",
     imagen:
-      "https://images.cdn3.buscalibre.com/fit-in/360x360/10/9d/109df8e47c0b36b888ea2be18a4ce3e5.jpg",
+      "https://acf.geeknetic.es/imgri/imagenes/tutoriales/definiciones/2020/9/PC-Master-Race-5ghw.jpg?f=webp",
     precio: 75.50,
   },
   {
@@ -71,20 +71,18 @@ const productos = [
       "https://images.cdn3.buscalibre.com/fit-in/360x360/10/9d/109df8e47c0b36b888ea2be18a4ce3e5.jpg",
     precio: 75.50,
   },
-  // Define el resto de los productos aquí
 ];
+//ENDPOINT PARA PRODUCTOS POR ID
 mock.onGet(/\/api\/productos\/\d+/).reply((config) => {
     const productId = parseInt(config.url.split("/").pop(), 10);
     const productoDetalle = productos.find((producto) => producto.id === productId);
-  
     if (productoDetalle) {
-      return [200, productoDetalle]; // Responder con los detalles del producto específico
+      return [200, productoDetalle]; 
     } else {
-      return [404, { message: "Producto no encontrado" }]; // Responder con un error 404 si el producto no se encuentra
+      return [404, { message: "Producto no encontrado" }]; 
     }
   });
   
-  
-// Simula una solicitud GET a la ruta '/api/productos'
+  //ENDPOINT PARA PRODUCTOS TODOS
 mock.onGet("/api/productos").reply(200, productos);
 export default axios;

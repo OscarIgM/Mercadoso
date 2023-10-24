@@ -96,8 +96,8 @@
                     Mis compras</a>
                 </li>
               </ul>         
-<ProfileButton></ProfileButton>       
-     </div>
+                   <ProfileButton :isAdmin="true"></ProfileButton>
+            </div>
           </div>
         </nav>
 <ProfileConfiguration></ProfileConfiguration>
@@ -123,12 +123,12 @@
     };
     </script>
     <script setup>
-    import IconMessages from './icons/IconMessages.vue';
-      import IconCarrito from './icons/IconCarrito.vue';
-      import IconMiCompra from './icons/IconMiCompra.vue';
-      import IconPublish from './icons/IconPublish.vue';
-      import ProfileButton from './ProfileButton.vue';
-      import ProfileConfiguration from './ProfileConfiguration.vue';
+    import IconMessages from '../icons/IconMessages.vue';
+      import IconCarrito from '../icons/IconCarrito.vue';
+      import IconMiCompra from '../icons/IconMiCompra.vue';
+      import IconPublish from '../icons/IconPublish.vue';
+      import ProfileButton from '../ProfileButton.vue';
+      import ProfileConfiguration from '../ProfileConfiguration.vue';
     </script>
     <style>
     .user-name{
