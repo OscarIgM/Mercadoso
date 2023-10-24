@@ -5,11 +5,12 @@
          role="button" data-bs-toggle="dropdown"
          aria-expanded="false">
         {{ perfilLabel }}
-        <IconProfile></IconProfile>
       </a>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#configuracionPerfil">Configuración</a></li>
+        <RouterLink  :to="name='/'">
         <li><a class="dropdown-item" href="#" data-toggle="modal">Cerrar sesión</a></li>
+      </RouterLink>
       </ul>
     </li>
   </ul>
@@ -17,18 +18,17 @@
 
 <script>
 import { ref, computed } from 'vue';
-import IconProfile from './icons/IconProfile.vue';
-
+import { RouterLink } from 'vue-router';
 export default {
-  props: {
-    isAdmin: Boolean, // Este prop indica si el usuario es administrador
-  },
-  setup(props) {
-    const perfilLabel = computed(() => {
-      return props.isAdmin ? 'Administrador' : 'Perfil';
-    });
-
-    return { perfilLabel };
-  },
+    props: {
+        isAdmin: Boolean, 
+    },
+    setup(props) {
+        const perfilLabel = computed(() => {
+            return props.isAdmin ? 'Administrador' : 'Perfil';
+        });
+        return { perfilLabel };
+    },
+    components: { RouterLink }
 };
 </script>

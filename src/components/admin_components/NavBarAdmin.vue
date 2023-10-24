@@ -7,11 +7,10 @@
           data-bs-theme="dark"
         >
           <div class="container-fluid">
-            <a
-                  class="nav-link active"
-                  :class="{ active: nombreActivo === 'HomepageLogged' }"
-                  @click="navegar('HomepageLogged')"
-                  >Mercadoso</a>
+            <router-link :to="{ name: 'HomeAdmin' }" class="nav-link active-link " :class="{ active: nombreActivo === 'HomeAdmin' }">Mercadoso</router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
             <button
               class="navbar-toggler"
               type="button"
@@ -56,24 +55,8 @@
                 </button>
               </form>
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a
-                  class="nav-link active"
-                  :class="{ active: nombreActivo === 'Mypublish' }"
-                  @click="navegar('MyPublish')"
-                  >
-               <IconPublish></IconPublish>Publicar</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                  class="nav-link active"
-                  :class="{ active: nombreActivo === 'Mypublish' }"
-                  @click="navegar('MyPublish')"
-                  >
-                  <IconMyPublication></IconMyPublication>Mis publicaciones</a
-                  >
-                </li>
+               
+               
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">
               <IconMessages>
@@ -81,20 +64,8 @@
                Mensajes</a
                   >
                 </li>
-                <li class="nav-item">
-                  <a
-                  class="nav-link active"
-                  :class="{ active: nombreActivo === 'CarritoLoggedView' }"
-                  @click="navegar('CarritoLoggedView')"
-                  >
-                 <IconCarrito></IconCarrito>   Ver carrito</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">
-                    <IconMiCompra></IconMiCompra>
-                    Mis compras</a>
-                </li>
+            
+              
               </ul>         
                    <ProfileButton :isAdmin="true"></ProfileButton>
             </div>
@@ -129,6 +100,7 @@
       import IconPublish from '../icons/IconPublish.vue';
       import ProfileButton from '../ProfileButton.vue';
       import ProfileConfiguration from '../ProfileConfiguration.vue';
+import { RouterLink } from 'vue-router';
     </script>
     <style>
     .user-name{

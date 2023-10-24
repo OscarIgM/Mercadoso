@@ -40,14 +40,14 @@ export default {
     return {
       productos: [
         {
-          "imagenUrl": "https://falabella.scene7.com/is/image/Falabella/15790950_1?wid=800&hei=800&qlt=70",
+          "imagenUrl": "https://clsonyb2c.vtexassets.com/arquivos/ids/462295/711719556220_001.jpg?v=638246950270500000",
           "nombreProducto": "Playstation 5",
           "cantidad": "1",
           "valor": "400.000"
         },
         {
           "imagenUrl": "https://falabella.scene7.com/is/image/Falabella/15790950_1?wid=800&hei=800&qlt=70",
-          "nombreProducto": "Waren cigarro",
+          "nombreProducto": "Not ps5",
           "cantidad": "1",
           "valor": "400.000"
         }

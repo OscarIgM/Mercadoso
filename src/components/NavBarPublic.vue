@@ -100,11 +100,8 @@ export default {
 };
 </script>
 <script setup>
-import IconMessages from './icons/IconMessages.vue';
   import IconCarrito from './icons/IconCarrito.vue';
-  import IconProfile from './icons/IconProfile.vue';
-  import IconMiCompra from './icons/IconMiCompra.vue';
-  import IconPublish from './icons/IconPublish.vue';
+ import IconProfile from './icons/IconProfile.vue';
 </script>
 
 <style>

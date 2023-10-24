@@ -1,7 +1,6 @@
 <template>
-     <div id="contenedor">
 
-<NavBarPublic></NavBarPublic>
+<NavBarLogeado></NavBarLogeado>
 <div class="container">
     <div class="d-flex justify-content-center" style="height: 100vh;">
         <div class="col-3 mt-5 border-end border-secondary">
@@ -44,10 +43,8 @@
     </div>
 </div>
 
-</div>
-
 </template>
 
 <script setup>
-import NavBarPublic from '../components/NavBarPublic.vue';
+import NavBarLogeado from '../components/NavBarLogeado.vue';
 </script>

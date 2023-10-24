@@ -15,7 +15,7 @@ const router = createRouter({
       {
         path:'/product/:id',
         name:'ProductDetail',
-        component:()=>import('../views/ProductDetail.vue')
+        component:()=>import('../views/Public/ProductDetail.vue')
       },
       //LOGEADAS
     {
@@ -32,9 +32,9 @@ const router = createRouter({
       name:'MessageView',
       component:()=>import('../views/MessageView.vue')
     },{
-    path:'/MyPublish',
-    name:'MyPublish',
-    component:()=>import('../views/MyPublish.vue')},
+    path:'/MisPublicaciones',
+    name:'MisPublicaciones',
+    component:()=>import('../views/Logged/MisPublicaciones.vue')},
     {
       path:'/CarritoViewPublic',
       name:'CarritoViewPublic',
@@ -50,17 +50,36 @@ const router = createRouter({
         component:()=>import('../views/Logged/CalificacionCompraLogged.vue')
       },
       
-    {path:'/MyPurchases',
-  name: 'MyPurchases',
-component:()=>import('../views/MyPurchases.vue')},
-{path:'/CalificationsView',
+    {path:'/MisCompras',
+  name: 'MisCompras',
+component:()=>import('../views/Logged/MisCompras.vue')
+},
+{
+  path:'/CalificationsView',
 name:'CalificationsView',
 component:()=>import('../views/CalificationsView.vue')
 },
+{
+  path:'/productlog/:id',
+  name: 'ProductDetailLogged',
+  component:()=>import('../views/Logged/ProductDetailLogged.vue')
+},
+{
+  path:'/Publicar',
+  name: 'Publicar',
+  component:()=>import('../views/Logged/Publicar.vue')
+},{path:'/CarritoLoggedView', name: 'CarritoLoggedView', component:()=>import('../views/Logged/CarritoLogged.vue')},
 //ADMIN
 {path:'/HomeAdmin',
 name:'HomeAdmin',
-component:()=>import('../views/Admin/HomeAdmin.vue')}
+component:()=>import('../views/Admin/HomeAdmin.vue')},{
+path:'/ProductoAdmin',
+name:'ProductoAdmin',
+component:()=>import('../views/Admin/ProductoAdmin.vue')},
+{
+  path:'/UsuarioAdmin',
+  name:'UsuarioAdmin',
+  component:()=>import('../views/Admin/UsuarioAdmin.vue')}
   ]
 })
 

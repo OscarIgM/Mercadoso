@@ -1,10 +1,8 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-// Crea una instancia del adaptador mock de Axios
 const mock = new MockAdapter(axios);
 
-// Define los datos de los productos
 const productos = [
   {
     id: 1,
@@ -82,7 +80,25 @@ mock.onGet(/\/api\/productos\/\d+/).reply((config) => {
       return [404, { message: "Producto no encontrado" }]; 
     }
   });
+//ENDPOINT BUSQUEDA DE PRODUCTO
+mock.onGet(/\/api\/productos\?search=.+/).reply((config) => {
+  const searchTerm = config.url.split("=")[1];
+
+  const productosFiltrados = productos.filter((producto) => {
+    const nombreProducto = producto.nombre.toLowerCase();
+    const searchTermLower = searchTerm.toLowerCase();
+
+    return nombreProducto.includes(searchTermLower);
+  });
+
+  if (productosFiltrados.length > 0) {
+    return [200, productosFiltrados];
+  } else {
+    return [404, { message: "No se encontraron productos que coincidan con la búsqueda" }];
+  }
+});
+
   
-  //ENDPOINT PARA PRODUCTOS TODOS
+  //ENDPOINT PARA TODOS LOS PRODUCTOS
 mock.onGet("/api/productos").reply(200, productos);
 export default axios;

@@ -6,7 +6,7 @@
                 <div id="seccion" class="row">
                     <div class="col-3">
                         <div class="card">
-                            <img src="imagenes.productos/Consola PlaySatation 5.webp" class="card-img-top" alt="...">
+                            <img src="https://clsonyb2c.vtexassets.com/arquivos/ids/462295/711719556220_001.jpg?v=638246950270500000" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Consola Playstation 5</h5>
                                 <div class="rating justify-content-center">
@@ -72,7 +72,7 @@
                     <div class="col-3">
                         <div class="card">
                             <img
-                                src="imagenes.productos/mueble 2 puertas.jpg"
+                                src="https://clsonyb2c.vtexassets.com/arquivos/ids/462295/711719556220_001.jpg?v=638246950270500000"
                                 class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Mueble 2 puertas <br>
@@ -137,7 +137,7 @@
                 </div>
 </template>
 <script setup>
-import NavBarLogeado from '../components/NavBarLogeado.vue';
+import NavBarLogeado from '../../components/NavBarLogeado.vue';
 
 </script>
 <style>

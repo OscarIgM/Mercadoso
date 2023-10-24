@@ -75,7 +75,7 @@ export default {
 </script>
 
 <script setup>
-import NavBarPublic from '../components/NavBarPublic.vue';
-import axios from '../axios-mock.js'; // Ajusta la ruta según la ubicación de tu archivo
+import NavBarPublic from '../../components/NavBarPublic.vue';
+import axios from '../../axios-mock.js'; // Ajusta la ruta según la ubicación de tu archivo
 </script>
 
