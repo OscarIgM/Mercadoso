@@ -8,7 +8,7 @@
             <h4 class="mb-3" style="font-weight: bold;">Bienvenido</h4>
             <h6 class="mb-3 text-black-50">Iniciar sesión con correo</h6>
             <form ref="form" class="needs-validation" novalidate>
- <div class="mb-3">
+ <div class="mb-3 ">
   <label for="email" class="form-label" style="font-weight: bold;">Correo electrónico</label>
   <input
     type="email"

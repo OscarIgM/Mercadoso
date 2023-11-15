@@ -17,15 +17,14 @@ import NavBarPublic from '../../components/NavBarPublic.vue';
 import AnunciosCards from '../../components/AnunciosCards.vue';
 import Pagination from '../../components/mini_components/Pagination.vue';
 import { ref } from 'vue';
-import axios from '../../axios-mock.js'; 
-
+import axios from 'axios';
 const productos = ref([]);
 
 (async () => {
   try {
-    const response = await axios.get('/api/productos');
-    // Asigna los productos recibidos de la respuesta a la variable reactiva
+    const response = await axios.get('http://localhost:8080/products');
     productos.value = response.data;
+    console.log(productos.value);
   } catch (error) {
     console.error('Error al cargar productos:', error);
   }
