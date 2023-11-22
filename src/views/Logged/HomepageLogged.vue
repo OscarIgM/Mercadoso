@@ -1,7 +1,10 @@
 <template>
   <div>
-<NavBarLogeado :searchTerm="searchTerm"></NavBarLogeado>   
- <div class="row col-7 mx-auto gy-0 py-5">
+    <NavBarLogeado :searchTerm="searchTerm"></NavBarLogeado>
+    <div style="position: relative; overflow: hidden;">
+        <CarouselHomePage></CarouselHomePage>
+    </div>
+    <div class="row col-7 mx-auto gy-0 py-5" style="display: flex;">
       <AnunciosCards
         v-for="producto in productos"
         :key="producto.id"
@@ -19,6 +22,7 @@ import { ref } from 'vue';
 import axios from 'axios'; 
 import NavBarLogeado from '../../components/NavBarLogeado.vue';
 import { onMounted } from 'vue';
+import CarouselHomePage from '../../components/CarouselHomePage.vue';
 
 const productos = ref([]);
 

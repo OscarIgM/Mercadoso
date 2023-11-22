@@ -16,6 +16,10 @@ const router = createRouter({
         path:'/product/:id',
         name:'ProductDetail',
         component:()=>import('../views/Public/ProductDetail.vue')
+      },{
+        path:'/SignupView',
+        name:'SignupView',
+        component: ()=>import('../views/Public/SignupView.vue')
       },
       //LOGEADAS
     {
