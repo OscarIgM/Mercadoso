@@ -63,6 +63,7 @@ import NavBarPublic from '../../components/NavBarPublic.vue';
 
 
 
+
 <style>
 #contenedor * {
   font-family: 'Poppins', sans-serif;

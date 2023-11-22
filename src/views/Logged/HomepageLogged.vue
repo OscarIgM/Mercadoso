@@ -16,7 +16,7 @@
 import AnunciosCards from '../../components/AnunciosCards.vue';
 import Pagination from '../../components/mini_components/Pagination.vue';
 import { ref } from 'vue';
-import axios from '../../axios-mock.js'; 
+import axios from 'axios'; 
 import NavBarLogeado from '../../components/NavBarLogeado.vue';
 import { onMounted } from 'vue';
 
@@ -24,7 +24,7 @@ const productos = ref([]);
 
 (async () => {
   try {
-    const response = await axios.get('/api/productos');
+    const response = await axios.get('http://localhost:8080/products');
     // Asigna los productos recibidos de la respuesta a la variable reactiva
     productos.value = response.data;
   } catch (error) {

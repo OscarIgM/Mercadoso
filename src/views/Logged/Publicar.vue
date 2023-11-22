@@ -8,7 +8,7 @@
           <form>
             <div class="mb-3">
               <label for="nombreProducto" class="form-label">Nombre del producto</label>
-              <input type="text" class="form-control" id="nombreProducto" />
+              <input v-model="productData" type="text" class="form-control" id="nombreProducto" />
             </div>
             <div class="mb-3">
               <label for="descripcion" class="form-label">Descripción</label>
@@ -45,4 +45,8 @@
 
 <script setup>
 import NavBarLogeado from '../../components/NavBarLogeado.vue';
+
+const productData={
+  
+}
 </script>
