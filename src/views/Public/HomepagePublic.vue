@@ -22,7 +22,6 @@ import Pagination from '../../components/mini_components/Pagination.vue';
 import { ref } from 'vue';
 import axios from 'axios';
 const productos = ref([]);
-
 (async () => {
   try {
     const response = await axios.get('http://localhost:8080/products');

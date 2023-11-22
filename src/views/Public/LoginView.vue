@@ -10,17 +10,18 @@
           <div class="mx-auto">
             <h4 class="mb-3" style="font-weight: bold">Bienvenido</h4>
             <h6 class="mb-3 text-black-50">Iniciar sesión con correo</h6>
-            <form ref="form" class="needs-validation" novalidate>
+            <form @submit.prevent="submitLogin" ref="form" class="needs-validation">
               <div class="mb-3">
                 <label for="email" class="form-label" style="font-weight: bold"
-                  >Correo electrónico</label
-                >
+                  >Correo electrónico</label>
                 <input
+                  v-model="userData.username"
                   type="email"
                   id="email"
+                  name="email"
                   class="form-control border border-secondary rounded-0"
                   required
-                  v-model="email"
+                  
                 />
                 <div class="invalid-feedback">
                   Por favor ingresa un correo electrónico válido.
@@ -32,14 +33,14 @@
                   for="password"
                   class="form-label"
                   style="font-weight: bold"
-                  >Contraseña</label
-                >
+                  >Contraseña</label>
                 <input
                   type="password"
                   id="password"
+                  name="password"
                   class="form-control border border-secondary rounded-0"
                   required
-                  v-model="password"
+                  v-model="userData.password"
                 />
                 <div class="invalid-feedback">
                   Por favor ingresa tu contraseña.
@@ -73,18 +74,48 @@
 
 <script setup>
 import NavBarPublic from "../../components/NavBarPublic.vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+import axios from "axios";
+import { ref } from 'vue';
+
+const router = useRouter();
+
+const userData = ref({
+  username: '',
+  password: ''
+});
+
+//AXIOS FUNCTION ASYNC
+const submitLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:8080/auth/login', userData.value);
+    console.log(response);
+    console.log(response.data);
+    // Verificar el código de estado de la respuesta del servidor
+    if (response.status === 200) {
+      console.log("Inicio de sesión exitoso");
+      router.push({ name: 'HomepageLogged' });
+    } else {
+      alert("Hubo un problema durante el inicio de sesión");
+    }
+  } catch(error){
+    if (error.response) {
+      console.error('Error de respuesta del servidor:', error.response.data);
+      console.log('Respuesta completa del servidor:', error.response);
+    } else if (error.request) {
+      // La solicitud fue realizada pero no se recibió respuesta
+      console.error('No se recibió respuesta del servidor');
+    } else {
+      // Otros errores
+      console.error('Error durante el inicio de sesión:', error.message);
+    }
+  }
+};
 
 
 
 </script>
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> a7fb95f5b5a1bbe9440765e35d091e11a21a4397
 <style>
 #contenedor * {
   font-family: "Poppins", sans-serif;

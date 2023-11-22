@@ -70,11 +70,10 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import NavBarPublic from "../../components/NavBarPublic.vue";
 import axios from 'axios';
-import {ref} from 'vue';
+import { ref } from 'vue';
 
 const userData = ref({
   username: '',
@@ -82,18 +81,17 @@ const userData = ref({
   password: ''
 });
 
-//axIOS FUNCTION ASYNC
-
 const submitSignup = async () => {
   try {
     const userDataToSend = { 
-      name: userData.value.username,
+      username: userData.value.username,
       email: userData.value.email,
       password: userData.value.password
-     };
+    };
 
-    const response = await axios.post('http://localhost:8080/api/v1/users/register', userDataToSend, { withCredentials: true});
-    
+    // Realiza la solicitud POST al endpoint de registro
+    const response = await axios.post('http://localhost:8080/auth/register', userDataToSend);
+
     if (response.data) {
       console.log('Registro exitoso', response.data);
       // Resto del código de redirección o manejo de éxito
@@ -102,7 +100,7 @@ const submitSignup = async () => {
       // Puedes mostrar un mensaje de error al usuario
     }
 
-    // Redirect the user, display a success message, etc.
+    // Redirecciona al usuario, muestra un mensaje de éxito, etc.
 
   } catch (error) {
     if (error.response) {
@@ -118,10 +116,9 @@ const submitSignup = async () => {
     }
   }
 };
-
-
-
 </script>
+
+
 
 <style>
 #contenedor * {
