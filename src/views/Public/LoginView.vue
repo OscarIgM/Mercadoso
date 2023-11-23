@@ -77,7 +77,10 @@ import NavBarPublic from "../../components/NavBarPublic.vue";
 import { RouterLink, useRouter } from "vue-router";
 import axios from "axios";
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
+
+const store = useStore();
 const router = useRouter();
 
 const userData = ref({
@@ -94,6 +97,7 @@ const submitLogin = async () => {
     // Verificar el código de estado de la respuesta del servidor
     if (response.status === 200) {
       console.log("Inicio de sesión exitoso");
+      store.commit("setUsuario", response.data);
       router.push({ name: 'HomepageLogged' });
     } else {
       alert("Hubo un problema durante el inicio de sesión");
