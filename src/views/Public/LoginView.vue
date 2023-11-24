@@ -91,6 +91,8 @@ const userData = ref({
 //AXIOS FUNCTION ASYNC
 const submitLogin = async () => {
   try {
+    //De momento se usara esta funcion para obtener el primer usuario para testear
+    const userTest = await store.dispatch('obtenerUsuarioTest');
     const response = await axios.post('http://localhost:8080/auth/login', userData.value);
     console.log(response);
     console.log(response.data);

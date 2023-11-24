@@ -14,14 +14,15 @@
                 </div>
             </div>
             <h4>{{ `$ ${producto.price}` }}</h4>
-            <p @click="removerProducto" style="text-align-last: right; text-decoration: underline; padding-right: 5%;">
-                Remover</p>
+            <p @click="removerProducto" style="text-align-last: right; text-decoration: underline; cursor: pointer; display: inline-block;">
+                Remover
+            </p>
         </div>
     </div>
 </template>
   
 <script setup>
-import { defineProps, defineEmits  } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import axios from 'axios';
 
 
@@ -42,6 +43,13 @@ const removerProducto = async () => {
 
 const actualizarCantidad = async () => {
     try {
+        // Actualizar la cantidad del producto directamente en el estado
+        emits('actualizar-cantidad', {
+            productId: producto.id,
+            newQuantity: producto.quantity,
+        });
+
+        // Luego, realizar la llamada a la API si es necesario
         await axios.post('http://localhost:8080/products', producto);
         console.log('Cantidad del producto actualizada con éxito');
     } catch (error) {
