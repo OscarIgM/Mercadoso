@@ -15,9 +15,9 @@
 
               <div class="mb-3">
                 <label for="username" class="form-label" style="font-weight: bold">Nombre</label>
-                <input v-model="userData.username" type="text" id="username" class="form-control border border-secondary rounded-0" required/>
+                <input v-model="userData.username" type="text" id="username" name="email" class="form-control border border-secondary rounded-0" required/>
                 <div class="invalid-feedback">
-                  Porfavor ingresa tu nombre.
+                  Por favor ingresa tu nombre.
                 </div>
               </div>
 
@@ -25,7 +25,7 @@
                 <label for="email" class="form-label" style="font-weight: bold">Correo electronico</label>
                 <input v-model="userData.email" type="email" id="email" name="email" class="form-control border border-secondary rounded-0" required/>
                 <div class="invalid-feedback">
-                  Porfavor ingresa tu correo electronico.
+                  Por favor ingresa tu correo electronico.
                 </div>
               </div>
 
