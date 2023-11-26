@@ -36,9 +36,9 @@
                   Productos
                 </a>
                 <ul class="dropdown-menu">
-                  <li v-for="category in categories" :key="category">
+                  <li v-for="category in categories" :key="category.id">
                     <a class="dropdown-item" @click="seleccionarCategoria(category)">
-                    {{ category }}
+                      {{ category.name }}
                     </a>
                   </li>
                 </ul>
