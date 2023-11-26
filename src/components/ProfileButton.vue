@@ -1,9 +1,10 @@
 <template>
-  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <ul class="navbar-nav mb-2 mb-lg-0">
     <li class="nav-item active dropdown">
       <a class="nav-link active dropdown-toggle" href="#"
          role="button" data-bs-toggle="dropdown"
          aria-expanded="false">
+         <IconProfile></IconProfile>
         {{ perfilLabel }}
       </a>
       <ul class="dropdown-menu">
@@ -19,6 +20,7 @@
 <script>
 import { ref, computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import IconProfile from './icons/IconProfile.vue';
 export default {
     props: {
         isAdmin: Boolean, 
@@ -29,6 +31,6 @@ export default {
         });
         return { perfilLabel };
     },
-    components: { RouterLink }
+    components: { RouterLink, IconProfile }
 };
 </script>

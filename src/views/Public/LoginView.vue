@@ -84,8 +84,8 @@ const store = useStore();
 const router = useRouter();
 
 const userData = ref({
-  username: '',
-  password: ''
+  username:'',
+  password:''
 });
 
 //AXIOS FUNCTION ASYNC

@@ -7,19 +7,17 @@
         
           <form @submit.prevent="submitPublish">
             <div class="mb-3">
-              <input v-model="productData.name" type="text" class="form-control" id="nombreProducto" />
-
               <label for="nombreProducto" class="form-label">Nombre del producto</label>
+              <input v-model="productData.name" type="text" class="form-control" id="name" required/>
             </div>
             <div class="mb-3">
-              <input v-model="productData.description" type="text" class="form-control" id="categoria" />
-
               <label for="descripcion" class="form-label">Descripción</label>
+              <input v-model="productData.description" type="text" class="form-control" id="description" required/>
             </div>
 
             <div class="mb-3">
-              <input v-model="productData.price" type="number" class="form-control" id="imagen" />
               <label for="precio" class="form-label">Precio</label>
+              <input v-model="productData.price" type="number" class="form-control" id="price" required/>
             </div>
            <!-- <div class="mb-3">
               <label for="cantidad" class="form-label">Cantidad del producto</label>
@@ -29,22 +27,24 @@
             <div class="mb-3">
               <label for="imagen" class="form-label">Imagen</label>
               <input type="file" class="form-control" id="imagen" />
-            </div>
-
-            <div class="mb-3">
-              <label for="categoria" class="form-label">Categoría</label>
-              <input type="text" class="form-control" id="categoria" />
             </div>-->
+            <div class="mb-3">
+              <label for="categoria" class="form-label">Categoría (opcional)</label>
+              <select v-model="productData.category" class="form-select form-select-sm">
+              <option value=''>Seleccionar categoría</option>
+              <option v-for="category in categories" :key="category.id" :value="category">{{ category.name }}</option>
+            </select>
+            </div>
 
             <div class="d-grid gap-2">
               <button
                     type="submit"
                     class="btn btn-primary rounded-pill"
-                    style="width: 250px; font-weight: bold">
+                    style="font-weight: bold">
                     Publicar
-                  </button>            </div>
+                  </button>           
+                 </div>
           </form>
-        
       </ul>
     </div>
 </template>
@@ -52,20 +52,41 @@
 <script setup>
 import NavBarLogeado from '../../components/NavBarLogeado.vue';
 import axios from 'axios';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const productData=ref({
 name:'',
 description:'',
-price:''
-})
+price:'',
+category:''
+});
+
+const categories = ref([]);
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/products/categories');
+    if (response.data) {
+      categories.value = response.data;
+    } else {
+      console.error('La respuesta del servidor no contiene datos:', response);
+    }
+  } catch (error) {
+    console.error('Error al obtener categorías:', error);
+  }
+};
+
+onMounted(() => {
+  fetchCategories();
+});
 
 const submitPublish = async () => {
   try {
     const productDataToSend = { 
       name:productData.value.name,
-description:productData.value.name,
-price:productData.value.price
+      description:productData.value.description,
+      price:productData.value.price,
+      category:productData.value.category || null
     };
     const response = await axios.post('http://localhost:8080/products', productDataToSend);
     if (response.data) {
