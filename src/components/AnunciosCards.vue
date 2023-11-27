@@ -33,9 +33,4 @@ const { producto } = defineProps(['producto']);
  .btn-square{
   border-radius: 0;
  }
- 
-
-  
- 
-
 </style>
