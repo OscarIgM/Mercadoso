@@ -65,7 +65,7 @@ const categories = ref([]);
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/products/categories');
+    const response = await axios.get('http://localhost:8080/category');
     if (response.data) {
       categories.value = response.data;
     } else {
