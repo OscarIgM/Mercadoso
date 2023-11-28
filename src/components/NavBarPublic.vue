@@ -107,7 +107,7 @@
         }
       },
       fetchCategories() {
-      axios.get('http://localhost:8080/products/categories')
+      axios.get('http://localhost:8080/category')
       .then(response => {
         this.categories = response.data;
       })
