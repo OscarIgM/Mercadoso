@@ -5,7 +5,7 @@
         <CarouselHomePage></CarouselHomePage>
     </div>
     <div class="row col-7 mx-auto gy-0 py-5" style="display: flex;">
-      <AnunciosCards
+      <AnunciosCardsLog
         v-for="producto in productos"
         :key="producto.id"
         :producto="producto"
@@ -16,7 +16,7 @@
 <Pagination></Pagination>
 </template>
 <script setup>
-import AnunciosCards from '../../components/AnunciosCards.vue';
+import AnunciosCardsLog from '../../components/AnunciosCardsLog.vue';
 import Pagination from '../../components/mini_components/Pagination.vue';
 import { ref } from 'vue';
 import axios from 'axios'; 

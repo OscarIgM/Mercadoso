@@ -6,7 +6,8 @@
         <br>
         <div class="row">
             <div class="col-6">
-                <ProductoMyPublish v-for="producto in productos" :key="producto.id" :producto="producto" @producto-eliminado="eliminarProducto(producto.id)">
+                <ProductoMyPublish v-for="producto in productos" :key="producto.id" :producto="producto"
+                    @producto-eliminado="eliminarProducto" @actualizar-cantidad="actualizarCantidadProducto">
                 </ProductoMyPublish>
                 <hr>
 
@@ -73,12 +74,20 @@ const productos = ref([]);
 
 const eliminarProducto = (productoId) => {
     // Filtrar la lista de productos para excluir el producto eliminado
-    productos.value = productos.value.filter(producto => producto.id !== productoId);
+    productos.value = productos.value.filter((producto) => producto.id !== productoId);
+};
+
+const actualizarCantidadProducto = ({ productId, newQuantity }) => {
+    // Buscar el producto en la lista y actualizar la cantidad
+    const producto = productos.value.find((p) => p.id === productId);
+    if (producto) {
+        producto.quantity = newQuantity;
+    }
 };
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`http://localhost:8080/products/user/${store.state.usuario.id}`);
+        const response = await axios.get(`http://localhost:8080/users/${store.state.usuario.id}/products`);
         productos.value = response.data;
     } catch (error) {
         console.error('Error al obtener productos publicados:', error);
