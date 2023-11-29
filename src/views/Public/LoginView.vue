@@ -74,10 +74,10 @@
 
 <script setup>
 import NavBarPublic from "../../components/NavBarPublic.vue";
-import { RouterLink, useRouter } from "vue-router";
+import { RouterLink, useRouter as useVueRouter } from "vue-router";
 import axios from "axios";
 import { ref } from 'vue';
-import { useRouter, useStore } from 'vuex';
+import { useStore } from 'vuex';
 
 
 const store = useStore();
