@@ -62,6 +62,7 @@ export default createStore({
   getters: {
     isAuthenticated: (state) => state.isAuthenticated,
   usuario: (state) => state.usuario,
+  token:(state)=>state.token,
   
 }
 });

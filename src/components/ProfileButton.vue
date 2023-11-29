@@ -25,8 +25,6 @@ import IconProfile from './icons/IconProfile.vue';
 import { RouterLink } from 'vue-router';
 
 const store = useStore();
-
-
 const perfilLabel = computed(() => {
 const userInfo=store.getters.usuario
   return userInfo ? userInfo : 'Perfil';
