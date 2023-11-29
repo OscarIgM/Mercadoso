@@ -77,7 +77,7 @@ import NavBarPublic from "../../components/NavBarPublic.vue";
 import { RouterLink, useRouter } from "vue-router";
 import axios from "axios";
 import { ref } from 'vue';
-import { useStore } from 'vuex';
+import { useRouter, useStore } from 'vuex';
 
 
 const store = useStore();
@@ -92,12 +92,12 @@ const userData = ref({
 const submitLogin = async () => {
   try {
     const response = await axios.post('http://localhost:8080/auth/login', userData.value);
-    console.log(response);
     console.log(response.data);
     // Verificar el código de estado de la respuesta del servidor
     if (response.status === 200) {
       console.log("Inicio de sesión exitoso");
-      store.commit("setUsuario", response.data);
+      store.commit("setToken", { token: response.data.token });
+      console.log(store);
       router.push({ name: 'HomepageLogged' });
     } else {
       alert("Hubo un problema durante el inicio de sesión");
@@ -119,6 +119,7 @@ const submitLogin = async () => {
 
 
 </script>
+
 
 <style>
 #contenedor * {

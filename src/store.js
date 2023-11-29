@@ -1,26 +1,27 @@
-import { createStore } from "vuex";
-import axios from "axios";
-
-const USER_KEY = "usuario";
+import { createStore } from 'vuex';
+import jwt_decode from 'jsonwebtoken';
 
 export default createStore({
   state: {
     usuario: null,
+    token: null,
   },
   mutations: {
     setUsuario(state, usuario) {
       state.usuario = usuario;
-      localStorage.setItem(USER_KEY, JSON.stringify(usuario));
     },
-    cargarUsuarioDesdeLocalStorage(state) {
-      const usuario = localStorage.getItem(USER_KEY);
-      if (usuario) {
-        state.usuario = JSON.parse(usuario);
-      }
+    setToken(state, payload) {
+      state.token = payload.token;
+      // Decodificar el token y almacenar la información del usuario
+      const decodedToken = jwt_decode(payload.token);
+      state.usuario = decodedToken.sub; // 'sub' es comúnmente utilizado para el id del usuario en JWT
+    },
+    clearAuthData(state) {
+      state.usuario = null;
+      state.token = null;
     },
   },
-  actions: {
-    
+  getters: {
+    isAuthenticated: (state) => !!state.token,
   },
-  getters: {},
 });
