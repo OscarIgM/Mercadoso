@@ -42,10 +42,15 @@ export default createStore({
     },
   
     logout({ commit }) {
-      commit('setAuthentication', false);
-      commit('setToken', { token: null });
-      // Elimina el token de localStorage
-      localStorage.removeItem('token');
+      try {
+        commit('setAuthentication', false);
+        // Elimina el token de localStorage
+        localStorage.removeItem('token');
+        console.log("Cierre sesión exitoso");
+      } catch (error) {
+        console.error('Error al cerrar sesión: ', error);
+        throw error;
+      }
     },
     checkAuth({ commit }) {
       const token = localStorage.getItem('token');
