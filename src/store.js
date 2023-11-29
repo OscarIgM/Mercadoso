@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-
+import { jwtDecode } from "jwt-decode";
 export default createStore({
   state: {
     isAuthenticated:false,
@@ -9,6 +9,7 @@ export default createStore({
   mutations: {
     setAuthentication(state, isAuthenticated) {
       state.isAuthenticated = isAuthenticated;
+      console.log(isAuthenticated);
     },
     setUsuario(state, usuario) {
       state.usuario = usuario;
@@ -16,8 +17,9 @@ export default createStore({
     setToken(state, payload) {
       state.token = payload.token;
       // Decodificar el token y almacenar la información del usuario
-      const decodedToken = jwt_decode(payload.token);
-      state.usuario = decodedToken.sub; // 'sub' es comúnmente utilizado para el id del usuario en JWT
+      const decodedToken = jwtDecode(payload.token);
+      state.usuario = decodedToken.sub;
+      console.log('Usuario almacenado en el estado:', state.usuario);
     }
   },
   actions: {
@@ -48,14 +50,18 @@ export default createStore({
     checkAuth({ commit }) {
       const token = localStorage.getItem('token');
       if (token) {
+        const decodedToken = jwtDecode(token);
+        commit('setUsuario', decodedToken.sub); // Use decodedToken.sub
         commit('setAuthentication', true);
         commit('setToken', { token });
       }
     },
+      
     // Otras acciones relacionadas con el usuario pueden agregarse aquí
   },
   getters: {
     isAuthenticated: (state) => state.isAuthenticated,
-    // Otros getters relacionados con el usuario pueden agregarse aquí
-  },
+  usuario: (state) => state.usuario,
+  
+}
 });

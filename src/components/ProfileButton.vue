@@ -1,4 +1,5 @@
 <template>
+  
   <ul class="navbar-nav mb-2 mb-lg-0">
     <li class="nav-item active dropdown">
       <a class="nav-link active dropdown-toggle" href="#"
@@ -17,20 +18,24 @@
   </ul>
 </template>
 
-<script>
-import { ref, computed } from 'vue';
-import { RouterLink } from 'vue-router';
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 import IconProfile from './icons/IconProfile.vue';
+import { RouterLink } from 'vue-router';
+
+const store = useStore();
+
+
+const perfilLabel = computed(() => {
+const userInfo=store.getters.usuario
+  return userInfo ? userInfo : 'Perfil';
+});
+
+</script>
+
+<script>
 export default {
-    props: {
-        isAdmin: Boolean, 
-    },
-    setup(props) {
-        const perfilLabel = computed(() => {
-            return props.isAdmin ? 'Administrador' : 'Perfil';
-        });
-        return { perfilLabel };
-    },
-    components: { RouterLink, IconProfile }
+  components: { RouterLink, IconProfile },
 };
 </script>
