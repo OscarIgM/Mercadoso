@@ -11,7 +11,7 @@
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#configuracionPerfil">Configuración</a></li>
         <RouterLink  :to="name='/'">
-        <li><a class="dropdown-item" href="#" data-toggle="modal">Cerrar sesión</a></li>
+        <li><a class="dropdown-item" href="#" data-toggle="modal" @click="logout">Cerrar sesión</a></li>
       </RouterLink>
       </ul>
     </li>
@@ -31,11 +31,18 @@ const perfilLabel = computed(() => {
 const userInfo=store.getters.usuario
   return userInfo ? userInfo : 'Perfil';
 });
-
+const logout = () => {
+  store.dispatch('logout');
+};
 </script>
 
 <script>
 export default {
   components: { RouterLink, IconProfile },
+  methods: {
+    logout() {
+      logout(); //Llamada a la función definida en setup
+    },
+  },
 };
 </script>
