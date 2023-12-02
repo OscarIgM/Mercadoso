@@ -12,7 +12,6 @@
       />
     </div>
   </div>
-
 <Pagination></Pagination>
 </template>
 <script setup>

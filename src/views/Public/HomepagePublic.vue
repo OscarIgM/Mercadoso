@@ -19,6 +19,7 @@
 import NavBarPublic from '../../components/NavBarPublic.vue';
 import AnunciosCards from '../../components/AnunciosCards.vue';
 import Pagination from '../../components/mini_components/Pagination.vue';
+import CarouselHomePage from '../../components/CarouselHomePage.vue';
 import { ref } from 'vue';
 import axios from 'axios';
 const productos = ref([]);
