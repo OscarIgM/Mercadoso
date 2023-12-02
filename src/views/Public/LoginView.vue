@@ -76,13 +76,11 @@
 
 <script setup>
 import NavBarPublic from "../../components/NavBarPublic.vue";
-import { RouterLink, useRouter as useVueRouter } from "vue-router";
-import axios from "axios";
+import { RouterLink } from "vue-router";
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore(); // Obtén acceso a la store Vuex
-const router = useVueRouter(); // Obtén acceso al enrutador
 const userData = ref({
   username: '',
   password: ''
@@ -90,22 +88,7 @@ const userData = ref({
 
 //AXIOS FUNCTION ASYNC
 const submitLogin = async () => {
-  try {
-    //De momento se usara esta funcion para obtener el primer usuario para testear
-    const response = await axios.post('http://localhost:8080/auth/login', userData.value);
-    if (response.status === 200) {
-      console.log("Inicio de sesión exitoso");
-      store.commit("setUsuario",{usuario: userData.value})
-      store.commit("setToken", { token: response.data.token });
-      store.commit("setAuthentication", {isAutheticated: true});
-     router.push({ name: 'HomepageLogged' });
-     console.log("Token recibido:", response.data.token);
-    } else {
-      alert("Hubo un problema durante el inicio de sesión");
-    }
-  } catch(error) {
-    console.error('Error durante el inicio de sesión:', error);
-  }
+    await store.dispatch('login', userData);
 };
 </script>
 
