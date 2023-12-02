@@ -19,15 +19,15 @@
               <label for="precio" class="form-label">Precio</label>
               <input v-model="productData.price" type="number" class="form-control" id="price" required/>
             </div>
-           <!-- <div class="mb-3">
+           <div class="mb-3">
               <label for="cantidad" class="form-label">Cantidad del producto</label>
               <input type="number" class="form-control" id="imagen" />
             </div>
-
             <div class="mb-3">
-              <label for="imagen" class="form-label">Imagen</label>
-              <input type="file" class="form-control" id="imagen" />
-            </div>-->
+            <label for="imagen" class="form-label">Imagen</label>
+            <input @change="handleFileUpload" type="file" class="form-control" id="imagen" />
+            <button type="button" @click="uploadImage">Subir Imagen</button>
+          </div>
             <div class="mb-3">
               <label for="categoria" class="form-label">Categoría (opcional)</label>
               <select v-model="productData.category" class="form-select form-select-sm">
@@ -58,9 +58,9 @@ const productData=ref({
 name:'',
 description:'',
 price:'',
-category:''
+category:'',
+imageId:'',
 });
-
 const categories = ref([]);
 
 const fetchCategories = async () => {
@@ -80,15 +80,37 @@ onMounted(() => {
   fetchCategories();
 });
 
+const uploadImage = async () => {
+  try {
+    // Crea un objeto FormData para enviar el archivo
+    const formData = new FormData();
+    formData.append('imagen', productData.image);
+
+    // Realiza la solicitud POST con Axios
+    const response = await axios.post('/google-drive/uploadImage', formData);
+
+    console.log('Imagen subida con éxito', response.data);
+    // Asigna la ID de la imagen a productData.imageId
+    productData.imageId = response.data;
+  } catch (error) {
+    console.error('Error al subir la imagen', error);
+    // Puedes manejar los errores aquí
+  }
+};
+
 const submitPublish = async () => {
   try {
+
     const productDataToSend = { 
-      name:productData.value.name,
-      description:productData.value.description,
-      price:productData.value.price,
-      category:productData.value.category || null
+      name: productData.value.name,
+      description: productData.value.description,
+      price: productData.value.price,
+      category: productData.value.category || null,
+      imageId: productData.value.imageId, // Usa el nombre correcto
     };
+
     const response = await axios.post('http://localhost:8080/products', productDataToSend);
+
     if (response.data) {
       console.log('Registro exitoso', response.data);
       // Resto del código de redirección o manejo de éxito
@@ -100,17 +122,7 @@ const submitPublish = async () => {
     // Redirecciona al usuario, muestra un mensaje de éxito, etc.
 
   } catch (error) {
-    if (error.response) {
-      // El servidor respondió con un código de error
-      console.error('Error de respuesta del servidor:', error.response.data);
-      console.log('Respuesta completa del servidor:', error.response);
-    } else if (error.request) {
-      // La solicitud fue realizada pero no se recibió respuesta
-      console.error('No se recibió respuesta del servidor');
-    } else {
-      // Otros errores
-      console.error('Error durante el registro:', error.message);
-    }
+    // Manejo de errores detallado...
   }
 };
 </script>
