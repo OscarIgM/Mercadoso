@@ -21,7 +21,7 @@
             </div>
            <div class="mb-3">
               <label for="cantidad" class="form-label">Cantidad del producto</label>
-              <input type="number" class="form-control" id="imagen" />
+              <input v-model="productData.quantity" type="number" class="form-control" id="imagen" />
             </div>
             <div class="mb-3">
             <label for="imagen" class="form-label">Imagen</label>
@@ -61,6 +61,7 @@ const productData=ref({
 name:'',
 description:'',
 price:'',
+quantity:'',
 user: '',
 category:'',
 imageId:'',
@@ -122,6 +123,7 @@ const submitPublish = async () => {
       name: productData.value.name,
       description: productData.value.description,
       price: productData.value.price,
+      quantity: productData.value.quantity,
       user: { id: store.getters.id },
       category: productData.value.category || null,
       imageId: productData.imageId, // Usa el nombre correcto

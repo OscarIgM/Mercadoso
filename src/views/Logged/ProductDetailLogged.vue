@@ -59,18 +59,15 @@ const quantity = ref(0);
 
 const addToCart = async () => {
   try {
-    const userId = store.state.usuario.id;
-    const productId = product.id;
-    const response = await axios.post('http://localhost:8080/users/${userId}/shoppingCart/${productId}/${quantity}');
+    const userId = store.getters.id;
+    const productId = route.params.id;
+    console.log('id producto ',productId,'y usuario Id',userId);
+    const response = await axios.post(`http://localhost:8080/shopping-cart/${userId}/${productId}/${quantity}`);
     console.log('Producto añadido al carrito:', response.data);
   } catch (error) {
     console.error('Error al añadir el producto al carrito:', error);
   }
 };
-
-
-
-
 const imagenProducto = ref('');
 
 const obtenerUrlImagen = async (imageId) => {
