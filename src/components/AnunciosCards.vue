@@ -3,11 +3,13 @@
     <div class="card shadow" style="height: 30rem; width: 20rem;">
       <img :src="imagenProducto" class="card-img-top row mt-3 mx-auto w-50" style="width: 100%; height: 160px; object-fit: cover;" alt="...">
       <div class="card-body" style="position: relative;">
-        <router-link :to="`/product/${producto.id}`">
-        <h5 class="card-title d-flex justify-content-center" style="font-size: 1rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+        <router-link
+          :to="isAuthenticated ? `/productlog/${producto.id}` : `/product/${producto.id}`"
+          class="card-title d-flex justify-content-center"
+          style="font-size: 1rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+        >
           {{ producto.name }}
-        </h5>
-      </router-link>
+        </router-link>
         <div class="d-flex justify-content-center">
           <Stars :cant_rates="producto.cant_rate" :rating="producto.rating" />
         </div>
@@ -27,6 +29,13 @@ import { defineProps } from 'vue';
 import axios from 'axios';
 import { RouterLink } from 'vue-router';
 import {ref, onMounted }from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const isAuthenticated = store.getters.isAuthenticated;
+
+
 
 const { producto } = defineProps(['producto']);
 const imagenProducto = ref('');

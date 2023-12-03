@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row" style="height: 100vh;">
         <div class="col d-inline-block my-5 ms-5 p-5">
-          <img :src="product.image" class="img-fluid mx-auto d-block" :alt="product.name" />
+          <img :src="imagenProducto" class="img-fluid mx-auto d-block" :alt="product.name" />
         </div>
         <div class="col d-inline-block my-5 me-5 p-5">
           <h3 style="font-weight: bold;">{{ product.name }}</h3>
@@ -68,17 +68,44 @@ const addToCart = async () => {
   }
 };
 
+
+
+
+const imagenProducto = ref('');
+
+const obtenerUrlImagen = async (imageId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/google-drive/obtainImage?id=${imageId}`, {
+      responseType: 'arraybuffer',
+    });
+
+    const base64 = btoa(
+      new Uint8Array(response.data).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    );
+
+    const url = `data:${response.headers['content-type'].toLowerCase()};base64,${base64}`;
+    imagenProducto.value = url;
+  } catch (error) {
+    console.error('Error al obtener la imagen', error);
+    // Puedes manejar el error o mostrar una imagen por defecto
+    imagenProducto.value = 'URL_IMAGEN_POR_DEFECTO';
+  }
+};
 onMounted(async () => {
-  const productId = route.params.id; // Obtén el ID del producto desde la ruta
+  const productId = route.params.id;
 
   try {
     const response = await axios.get(`http://localhost:8080/products/${productId}`);
-    console.log(response.data)
     product.value = response.data;
+    obtenerUrlImagen(product.value.imageId);
   } catch (error) {
     console.error('Error al cargar detalles del producto:', error);
   }
 });
+
 
 </script>
   
