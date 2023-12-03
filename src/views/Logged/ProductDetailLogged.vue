@@ -30,7 +30,7 @@
             <div class="d-flex flex-column" style="width: min-content;">
               <p>Cantidad</p>
               <div class="form-outline">
-                <input v-model="quantity" type="number" id="typeNumber" :min="0" :max="product.quantity" class="form-control" />
+                <input v-model="cantidad" type="number" id="typeNumber" :min="0" :max="product.quantity" class="form-control" />
               </div>
             </div>
           </div>
@@ -55,14 +55,14 @@ import axios from 'axios';
 const store = useStore();
 const route = useRoute();
 const product = ref({});
-const quantity = ref(0);
-
+const cantidad = ref(0);
 const addToCart = async () => {
   try {
-    const userId = store.getters.id;
-    const productId = route.params.id;
-    console.log('id producto ',productId,'y usuario Id',userId);
-    const response = await axios.post(`http://localhost:8080/shopping-cart/${userId}/${productId}/${quantity}`);
+    const userId = parseInt(store.getters.id);
+    const productId = parseInt(route.params.id);
+
+    console.log('id producto ',productId,'y usuario Id',userId, 'quantidad', cantidad.value);
+    const response = await axios.post(`http://localhost:8080/shopping-cart/${userId}/${productId}/${cantidad.value}`);
     console.log('Producto añadido al carrito:', response.data);
   } catch (error) {
     console.error('Error al añadir el producto al carrito:', error);
