@@ -41,7 +41,9 @@ const emits = defineEmits();
 
 const removerProducto = async () => {
   try {
-    await axios.delete(`http://localhost:8080/users/${store.state.usuario.id}/shoppingCart/${producto.product.id}`);
+    const userId = parseInt(store.state.usuario.id);
+    const productId = parseInt(producto.product.id);
+    await axios.delete(`http://localhost:8080/shoppingCart/${userId}/${productId}`);
     console.log('Producto eliminado con éxito');
 
     // Emitir el evento para notificar al componente principal
@@ -58,8 +60,10 @@ const actualizarCantidad = async () => {
       productId: producto.id,
       newQuantity: producto.quantity,
     });
-
-    await axios.post(`http://localhost:8080/users/${parseInt(store.state.usuario.id)}/shoppingCart/${producto.product.id}/${producto.quantity}`);
+    const userId = parseInt(store.state.usuario.id);
+    const productId = parseInt(producto.product.id);
+    const productQuantity = parseInt(producto.quantity);
+    await axios.post(`http://localhost:8080/shoppingCart/${userId}/${productId}/${productQuantity}`);
     console.log('Cantidad del producto actualizada con éxito');
   } catch (error) {
     console.error('Error al actualizar la cantidad del producto:', error);

@@ -11,12 +11,12 @@
       </div>
       <div class="col-4">
         <h3>Detalles de la compra</h3>
-        <div class="row">
+        <div class="row" v-for="producto in productos" :key="producto.id">
           <div class="col-6">
-            <p>Consola PlaySattion 5 x4</p>
+            <p>{{ producto.product.name }} x{{ producto.quantity }}</p>
           </div>
           <div class="col-6">
-            <p style="text-align-last: right;">$3.199.960</p>
+            <p style="text-align-last: right;">${{ producto.product.price * producto.quantity }}</p>
           </div>
         </div>
         <hr>
@@ -25,7 +25,7 @@
             <p>Total</p>
           </div>
           <div class="col-6">
-            <p style="text-align-last: right;">$3.199.960</p>
+            <p style="text-align-last: right;">${{ calcularTotal() }}</p>
           </div>
         </div>
         <button type="button" class="btn btn-primary" style="width: 100%;">Continuar compra</button>
@@ -47,6 +47,13 @@ import { onMounted } from 'vue';
 const store = useStore();
 const productos = ref([]);
 
+const calcularTotal = () => {
+  return productos.value.reduce((total, producto) => {
+    return total + producto.quantity * producto.product.price;
+  }, 0);
+};
+
+
 const eliminarProducto = (productoId) => {
     // Filtrar la lista de productos para excluir el producto eliminado
     productos.value = productos.value.filter((producto) => producto.id !== productoId);
@@ -62,7 +69,8 @@ const actualizarCantidadProducto = ({ productId, newQuantity }) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/users/${store.state.usuario.id}/shoppingCart`);
+    const userId = parseInt(store.state.usuario.id);
+    const response = await axios.get(`http://localhost:8080/shoppingCart/${userId}`);
     productos.value = response.data;
   } catch (error) {
     console.error('Error al obtener productos publicados:', error);
