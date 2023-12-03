@@ -87,7 +87,7 @@
             </li>
           </ul>
           <li class="nav-link active">
-              <ProfileButton></ProfileButton>
+            <ProfileButton></ProfileButton>
           </li>
         </div> 
       </div>
@@ -117,7 +117,7 @@ export default {
         this.$emit('search'); // Emit the search event
     },
     fetchCategories() {
-      axios.get('http://localhost:8080/products/categories')
+      axios.get('http://localhost:8080/category')
       .then(response => {
         this.categories = response.data;
       })

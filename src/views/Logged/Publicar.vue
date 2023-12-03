@@ -19,15 +19,15 @@
               <label for="precio" class="form-label">Precio</label>
               <input v-model="productData.price" type="number" class="form-control" id="price" required/>
             </div>
-           <!-- <div class="mb-3">
+           <div class="mb-3">
               <label for="cantidad" class="form-label">Cantidad del producto</label>
               <input type="number" class="form-control" id="imagen" />
             </div>
-
             <div class="mb-3">
-              <label for="imagen" class="form-label">Imagen</label>
-              <input type="file" class="form-control" id="imagen" />
-            </div>-->
+            <label for="imagen" class="form-label">Imagen</label>
+            <input @change="handleFileUpload" type="file" class="form-control" id="imagen" />
+            <button type="button" @click="uploadImage">Subir Imagen</button>
+          </div>
             <div class="mb-3">
               <label for="categoria" class="form-label">Categoría (opcional)</label>
               <select v-model="productData.category" class="form-select form-select-sm">
@@ -53,19 +53,23 @@
 import NavBarLogeado from '../../components/NavBarLogeado.vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const productData=ref({
 name:'',
 description:'',
 price:'',
-category:''
+user: '',
+category:'',
+imageId:'',
 });
-
 const categories = ref([]);
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/products/categories');
+    const response = await axios.get('http://localhost:8080/category');
     if (response.data) {
       categories.value = response.data;
     } else {
@@ -80,15 +84,51 @@ onMounted(() => {
   fetchCategories();
 });
 
+const imagePreview = ref(null);
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  productData.value.image = file;
+
+  // Muestra la imagen previa
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    imagePreview.value = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+const uploadImage = async () => {
+  try {
+    const formData = new FormData();
+    formData.append('file', productData.value.image);
+
+    const response = await axios.post('http://localhost:8080/google-drive/upload', formData);
+    console.log('Imagen subida con éxito', response.data);
+    productData.imageId = response.data;
+    //console.log('id imagen'+productData.imageId);
+
+    // Limpia la vista previa después de la carga exitosa
+    imagePreview.value = null;
+  } catch (error) {
+    console.error('Error al subir la imagen', error);
+  }
+};
+
 const submitPublish = async () => {
   try {
+
     const productDataToSend = { 
-      name:productData.value.name,
-      description:productData.value.description,
-      price:productData.value.price,
-      category:productData.value.category || null
+      name: productData.value.name,
+      description: productData.value.description,
+      price: productData.value.price,
+      user: { id: store.getters.id },
+      category: productData.value.category || null,
+      imageId: productData.imageId, // Usa el nombre correcto
     };
+console.log('producto publicado', productDataToSend);
     const response = await axios.post('http://localhost:8080/products', productDataToSend);
+
     if (response.data) {
       console.log('Registro exitoso', response.data);
       // Resto del código de redirección o manejo de éxito
@@ -100,17 +140,7 @@ const submitPublish = async () => {
     // Redirecciona al usuario, muestra un mensaje de éxito, etc.
 
   } catch (error) {
-    if (error.response) {
-      // El servidor respondió con un código de error
-      console.error('Error de respuesta del servidor:', error.response.data);
-      console.log('Respuesta completa del servidor:', error.response);
-    } else if (error.request) {
-      // La solicitud fue realizada pero no se recibió respuesta
-      console.error('No se recibió respuesta del servidor');
-    } else {
-      // Otros errores
-      console.error('Error durante el registro:', error.message);
-    }
+    console.log("error: ", error);
   }
 };
 </script>

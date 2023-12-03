@@ -51,9 +51,11 @@
                   type="submit"
                   class="btn btn-primary rounded-pill"
                   style="width: 250px; font-weight: bold"
-                >
+                >            
+
                   Iniciar Sesión
                 </button>
+                
               </div>
             </form>
 
@@ -74,52 +76,20 @@
 
 <script setup>
 import NavBarPublic from "../../components/NavBarPublic.vue";
-import { RouterLink, useRouter } from "vue-router";
-import axios from "axios";
+import { RouterLink } from "vue-router";
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 
-
-const store = useStore();
-const router = useRouter();
-
+const store = useStore(); // Obtén acceso a la store Vuex
 const userData = ref({
-  username:'',
-  password:''
+  username: '',
+  password: ''
 });
 
 //AXIOS FUNCTION ASYNC
 const submitLogin = async () => {
-  try {
-    //De momento se usara esta funcion para obtener el primer usuario para testear
-    const userTest = await store.dispatch('obtenerUsuarioTest');
-    const response = await axios.post('http://localhost:8080/auth/login', userData.value);
-    console.log(response);
-    console.log(response.data);
-    // Verificar el código de estado de la respuesta del servidor
-    if (response.status === 200) {
-      console.log("Inicio de sesión exitoso");
-      store.commit("setUsuario", response.data);
-      router.push({ name: 'HomepageLogged' });
-    } else {
-      alert("Hubo un problema durante el inicio de sesión");
-    }
-  } catch(error){
-    if (error.response) {
-      console.error('Error de respuesta del servidor:', error.response.data);
-      console.log('Respuesta completa del servidor:', error.response);
-    } else if (error.request) {
-      // La solicitud fue realizada pero no se recibió respuesta
-      console.error('No se recibió respuesta del servidor');
-    } else {
-      // Otros errores
-      console.error('Error durante el inicio de sesión:', error.message);
-    }
-  }
+    await store.dispatch('login', userData);
 };
-
-
-
 </script>
 
 <style>

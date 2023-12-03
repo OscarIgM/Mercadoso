@@ -1,40 +1,90 @@
-import { createStore } from "vuex";
-import axios from "axios";
+import { createStore } from 'vuex';
+import { jwtDecode } from "jwt-decode";
+import axios from 'axios';
+import router from "./router/index.js";
 
-const USER_KEY = "usuario";
-
-export default createStore({
+const store = createStore({
   state: {
-    usuario: null,
+    isAuthenticated:false,
+    email: null,
+    token: null,
   },
   mutations: {
-    setUsuario(state, usuario) {
-      state.usuario = usuario;
-      localStorage.setItem(USER_KEY, JSON.stringify(usuario));
+    setAuthentication(state, isAuthenticated) {
+      state.isAuthenticated = isAuthenticated;
+      console.log(isAuthenticated);
     },
-    cargarUsuarioDesdeLocalStorage(state) {
-      const usuario = localStorage.getItem(USER_KEY);
-      if (usuario) {
-        state.usuario = JSON.parse(usuario);
-      }
+    setEmail(state, email) {
+      state.email = email;
+    },
+    setToken(state, payload) {
+      state.token = payload.token;
+      // Almacena el token en localStorage
+      localStorage.setItem('token', payload.token);
+    },
+    clearAuthData(state) {
+      state.isAuthenticated = false;
+      state.email = null;
+      state.token = null;
+      localStorage.removeItem('token');
     },
   },
   actions: {
-    async obtenerUsuarioTest({ commit }) {
+    async login({ commit }, userData) {
       try {
-        // Realizar la solicitud GET al servidor para obtener el usuario Test
-        const response = await axios.get("http://localhost:8080/users/1");
-
-        // Almacenar el usuario en el estado del store
-        commit("setUsuario", response.data);
-
-        console.log(response.data);
-        return response.data;
+        const response = await axios.post('http://localhost:8080/auth/login', userData.value);
+        if (response.status === 200) {
+          commit('setAuthentication', true);
+          commit('setToken', { token: response.data.token });
+          commit('setEmail', jwtDecode(response.data.token).sub);
+          console.log("Token recibido:", response.data.token);
+          router.push({ name: 'HomepageLogged' });
+        } else {
+          throw new Error('Hubo un problema durante el inicio de sesión');
+        }
       } catch (error) {
-        console.error("Error al obtener el usuario:", error);
+        console.error('Error al iniciar sesión:', error);
         throw error;
       }
     },
+
+    logout({ commit }) {
+      try{
+        commit('clearAuthData');
+        console.log("Cierre sesión exitoso");
+      } catch (error) {
+        console.log("Error al cerrar sesión", error);
+      }
+    },
+
+    checkAuth({ commit }) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        commit('setEmail', decodedToken.sub);
+        commit('setAuthentication', true);
+        commit('setToken', { token });
+      }
+    },
   },
-  getters: {},
+  getters: {
+    isAuthenticated: (state) => state.isAuthenticated,
+    email: (state) => state.email,
+    token: (state) => state.token,
+    name: (state) => {
+      const decodedToken = jwtDecode(state.token);
+      return decodedToken.name;
+    },
+    id: (state) => {
+      const decodedToken = jwtDecode(state.token);
+      return decodedToken.id;
+    }
+  },
+  // Verificación de autenticación al crear la tienda
+  // Esto se ejecuta una vez al cargar la aplicación
+  async created() {
+    await this.dispatch('checkAuth');
+  },
 });
+store.dispatch('checkAuth');
+export default store;
