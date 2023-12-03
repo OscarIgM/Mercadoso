@@ -49,9 +49,12 @@ const store = createStore({
     },
 
     logout({ commit }) {
-      commit('clearAuthData');
-      console.log("Cierre sesión exitoso");
-      
+      try{
+        commit('clearAuthData');
+        console.log("Cierre sesión exitoso");
+      } catch (error) {
+        console.log("Error al cerrar sesión", error);
+      }
     },
 
     checkAuth({ commit }) {

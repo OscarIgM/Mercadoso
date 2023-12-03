@@ -53,11 +53,15 @@
 import NavBarLogeado from '../../components/NavBarLogeado.vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const productData=ref({
 name:'',
 description:'',
 price:'',
+user: '',
 category:'',
 imageId:'',
 });
@@ -118,6 +122,7 @@ const submitPublish = async () => {
       name: productData.value.name,
       description: productData.value.description,
       price: productData.value.price,
+      user: { id: store.getters.id },
       category: productData.value.category || null,
       imageId: productData.imageId, // Usa el nombre correcto
     };
@@ -135,7 +140,7 @@ console.log('producto publicado', productDataToSend);
     // Redirecciona al usuario, muestra un mensaje de éxito, etc.
 
   } catch (error) {
-    // Manejo de errores detallado...
+    console.log("error: ", error);
   }
 };
 </script>
