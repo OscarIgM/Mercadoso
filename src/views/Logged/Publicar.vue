@@ -80,21 +80,34 @@ onMounted(() => {
   fetchCategories();
 });
 
+const imagePreview = ref(null);
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  productData.value.image = file;
+
+  // Muestra la imagen previa
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    imagePreview.value = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
 const uploadImage = async () => {
   try {
-    // Crea un objeto FormData para enviar el archivo
     const formData = new FormData();
-    formData.append('imagen', productData.image);
+    formData.append('file', productData.value.image);
 
-    // Realiza la solicitud POST con Axios
-    const response = await axios.post('/google-drive/uploadImage', formData);
-
+    const response = await axios.post('http://localhost:8080/google-drive/upload', formData);
     console.log('Imagen subida con éxito', response.data);
-    // Asigna la ID de la imagen a productData.imageId
     productData.imageId = response.data;
+    //console.log('id imagen'+productData.imageId);
+
+    // Limpia la vista previa después de la carga exitosa
+    imagePreview.value = null;
   } catch (error) {
     console.error('Error al subir la imagen', error);
-    // Puedes manejar los errores aquí
   }
 };
 
@@ -106,9 +119,9 @@ const submitPublish = async () => {
       description: productData.value.description,
       price: productData.value.price,
       category: productData.value.category || null,
-      imageId: productData.value.imageId, // Usa el nombre correcto
+      imageId: productData.imageId, // Usa el nombre correcto
     };
-
+console.log('producto publicado', productDataToSend);
     const response = await axios.post('http://localhost:8080/products', productDataToSend);
 
     if (response.data) {

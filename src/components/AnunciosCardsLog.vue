@@ -29,6 +29,7 @@ import Stars from "./mini_components/Stars.vue";
 import { defineProps } from 'vue';
 import { RouterLink } from 'vue-router';
 
+
 const { producto } = defineProps(['producto']);
 </script>
 

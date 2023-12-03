@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 d-flex mb-4">
     <div class="card shadow" style="height: 30rem; width: 20rem;">
-      <img :src="producto.image" class="card-img-top row mt-3 mx-auto w-50" style="width: 100%; height: 160px; object-fit: cover;" alt="...">
+      <img :src="obtenerUrlImagen(producto.imageId)" class="card-img-top row mt-3 mx-auto w-50" style="width: 100%; height: 160px; object-fit: cover;" alt="...">
       <div class="card-body" style="position: relative;">
         <router-link :to="`/product/${producto.id}`">
         <h5 class="card-title d-flex justify-content-center" style="font-size: 1rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
@@ -24,9 +24,32 @@
 <script setup>
 import Stars from "./mini_components/Stars.vue";
 import { defineProps } from 'vue';
+import axios from 'axios';
 import { RouterLink } from 'vue-router';
 
 const { producto } = defineProps(['producto']);
+
+const obtenerUrlImagen = async (imageId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/google-drive/obtainImage?id=${imageId}`, {
+      responseType: 'arraybuffer',
+    });
+
+    const base64 = btoa(
+      new Uint8Array(response.data).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    );
+
+    return `data:${response.headers['content-type'].toLowerCase()};base64,${base64}`;
+  } catch (error) {
+    console.error('Error al obtener la imagen', error);
+    // Puedes manejar el error o mostrar una imagen por defecto
+    return 'URL_IMAGEN_POR_DEFECTO';
+  }
+};
+
 </script>
 
 <style>
