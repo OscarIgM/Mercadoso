@@ -28,7 +28,7 @@
             <p style="text-align-last: right;">${{ calcularTotal() }}</p>
           </div>
         </div>
-        <button type="button" class="btn btn-primary" style="width: 100%;">Realizar compra</button>
+        <button type="button" class="btn btn-primary" style="width: 100%;" @click="realizarCompra">Realizar compra</button>
       </div>
     </div>
 
@@ -48,6 +48,9 @@ import { onMounted } from 'vue';
 const store = useStore();
 const productos = ref([]);
 const userId = store.getters.id;
+
+
+//otras cosas
 const calcularTotal = () => {
   return productos.value.reduce((total, producto) => {
     return total + producto.quantity * producto.product.price;
@@ -56,7 +59,6 @@ const calcularTotal = () => {
 
 
 const eliminarProducto = (productoId) => {
-    // Filtrar la lista de productos para excluir el producto eliminado
     productos.value = productos.value.filter((producto) => producto.id !== productoId);
 };
 
@@ -77,6 +79,23 @@ onMounted(async () => {
     console.error('Error al obtener productos publicados:', error);
   }
 });
+
+
+// Realizar compra carrito
+// Realizar compra carrito
+const realizarCompra = async () => {
+  try {
+    console.log('La id enviada es', userId);
+    const enviar = parseInt(userId);
+    const response = await axios.post(`http://localhost:8080/purchase-orders/createOrder/${enviar}`);
+    console.log('Compra realizada con éxito:', response.data);
+    // Muestra un mensaje al usuario o realiza otras acciones según la respuesta del servidor
+    productos.value = [];
+  } catch (error) {
+    console.error('Error al realizar la compra:', error);
+    // Muestra un mensaje de error al usuario o realiza otras acciones según el error
+  }
+};
 
 
 </script>
