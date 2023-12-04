@@ -46,7 +46,7 @@ import { onMounted } from 'vue';
 
 const store = useStore();
 const productos = ref([]);
-
+const userId = store.getters.id;
 const calcularTotal = () => {
   return productos.value.reduce((total, producto) => {
     return total + producto.quantity * producto.product.price;
@@ -69,8 +69,8 @@ const actualizarCantidadProducto = ({ productId, newQuantity }) => {
 
 onMounted(async () => {
   try {
-    const userId = parseInt(store.state.usuario.id);
-    const response = await axios.get(`http://localhost:8080/shoppingCart/${userId}`);
+    console.log(userId);
+    const response = await axios.get(`http://localhost:8080/shopping-cart/${userId}`);
     productos.value = response.data;
   } catch (error) {
     console.error('Error al obtener productos publicados:', error);

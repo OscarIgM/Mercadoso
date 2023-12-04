@@ -5,7 +5,7 @@
         <div class="col-12" v-if="producto.product">
           <div class="row">
             <div class="col-2">
-              <img :src="producto.product.image" style="width: 100%;">
+              <img :src="imagenProducto" style="width: 100%;">
             </div>
             <div class="col-10">
               <h4>{{ producto.product.name }}</h4>
@@ -34,6 +34,8 @@
 import { defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import {ref, onMounted }from 'vue';
+
 
 const { producto } = defineProps(['producto']);
 const store = useStore();
@@ -41,9 +43,10 @@ const emits = defineEmits();
 
 const removerProducto = async () => {
   try {
-    const userId = parseInt(store.state.usuario.id);
+    const userId = parseInt(store.getters.id);
     const productId = parseInt(producto.product.id);
-    await axios.delete(`http://localhost:8080/shoppingCart/${userId}/${productId}`);
+    console.log('las id son ',userId, productId);
+    await axios.delete(`http://localhost:8080/shopping-cart/${userId}/${productId}`);
     console.log('Producto eliminado con éxito');
 
     // Emitir el evento para notificar al componente principal
@@ -69,7 +72,31 @@ const actualizarCantidad = async () => {
     console.error('Error al actualizar la cantidad del producto:', error);
   }
 };
+const imagenProducto = ref('');
 
+const obtenerUrlImagen = async (imageId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/google-drive/obtainImage?id=${imageId}`, {
+      responseType: 'arraybuffer',
+    });
+
+    const base64 = btoa(
+      new Uint8Array(response.data).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    );
+    const url = `data:${response.headers['content-type'].toLowerCase()};base64,${base64}`;
+    imagenProducto.value = url;
+  } catch (error) {
+    console.error('Error al obtener la imagen', error);
+    // Puedes manejar el error o mostrar una imagen por defecto
+    imagenProducto.value = 'URL_IMAGEN_POR_DEFECTO';
+  }
+};
+onMounted(() => {
+  obtenerUrlImagen(producto.product.imageId);
+});
 
 </script>
 
