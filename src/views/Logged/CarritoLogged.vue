@@ -28,7 +28,7 @@
             <p style="text-align-last: right;">${{ calcularTotal() }}</p>
           </div>
         </div>
-        <button type="button" class="btn btn-primary" style="width: 100%;">Continuar compra</button>
+        <button type="button" class="btn btn-primary" style="width: 100%;">Realizar compra</button>
       </div>
     </div>
 
@@ -43,6 +43,7 @@ import { useStore } from 'vuex';
 import { ref } from 'vue';
 import axios from 'axios';
 import { onMounted } from 'vue';
+
 
 const store = useStore();
 const productos = ref([]);

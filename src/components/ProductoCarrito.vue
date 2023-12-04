@@ -63,10 +63,10 @@ const actualizarCantidad = async () => {
       productId: producto.id,
       newQuantity: producto.quantity,
     });
-    const userId = parseInt(store.state.usuario.id);
+    const userId = parseInt(store.getters.id);
     const productId = parseInt(producto.product.id);
-    const productQuantity = parseInt(producto.quantity);
-    await axios.post(`http://localhost:8080/shoppingCart/${userId}/${productId}/${productQuantity}`);
+    const productQuantity = parseInt(producto.product.quantity);
+    await axios.post(`http://localhost:8080/shopping-cart/${userId}/${productId}/${productQuantity}`);
     console.log('Cantidad del producto actualizada con éxito');
   } catch (error) {
     console.error('Error al actualizar la cantidad del producto:', error);
