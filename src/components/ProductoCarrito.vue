@@ -46,7 +46,7 @@ const removerProducto = async () => {
     const userId = parseInt(store.getters.id);
     const productId = parseInt(producto.product.id);
     console.log('las id son ',userId, productId);
-    await axios.delete(`http://localhost:8080/shopping-cart/${userId}/${productId}`);
+    await axios.delete(`http://localhost:8080/shopping-cart/delete-product?id=${userId}&productId=${productId}`);
     console.log('Producto eliminado con éxito');
 
     // Emitir el evento para notificar al componente principal

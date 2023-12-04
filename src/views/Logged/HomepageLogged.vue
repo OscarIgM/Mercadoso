@@ -34,20 +34,6 @@ const productos = ref([]);
   }
 })();
 
-const searchTerm = ref('');
 
-// Método para buscar productos
-const searchProducts = async () => {
-  try {
-    const response = await axios.get(`/api/productos?search=${searchTerm.value}`);
-    productos.value = response.data;
-  } catch (error) {
-    console.error('Error al cargar productos:', error);
-  }
-};
-
-onMounted(async () => {
-  await searchProducts(); // Corrige la llamada a la función
-});
 
 </script>
