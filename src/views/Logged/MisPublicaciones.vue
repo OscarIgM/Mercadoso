@@ -13,6 +13,12 @@
 
             </div>
         </div>
+        <div class="col-4">
+            <h3>Detalles de las solicitudes</h3>
+            <RouterLink :to="{ name: 'MisPublicaciones' }">
+                <button class="btn btn-primary" style="width: 100%;">Publicar nuevo producto</button>
+            </RouterLink>
+        </div>
     </div>
 </template>
   
@@ -24,6 +30,7 @@ import { useStore } from 'vuex';
 import { ref } from 'vue';
 import axios from 'axios';
 import { onMounted } from 'vue';
+import { RouterLink } from "vue-router";
 
 
 const store = useStore();
