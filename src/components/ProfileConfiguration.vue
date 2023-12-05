@@ -32,11 +32,6 @@
                                 aria-describedby="emailHelp">
                         </div>
                         <div class="mb-1">
-                            <label class="form-label">Correo electrónico</label>
-                            <input v-model="formData.email" type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
-                        </div>
-                        <div class="mb-1">
                             <label class="form-label">Contraseña</label>
                             <input v-model="formData.password" type="password" class="form-control"
                                 id="exampleInputPassword1">
@@ -67,14 +62,13 @@ const userId = store.getters.id;
 
 const formData = reactive({
     name: '',
-    email: '',
     password: '',
     confirmPassword: '',
 });
 
 const saveChanges = async () => {
     // Validaciones del formulario
-    if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+    if (!formData.name || !formData.password || !formData.confirmPassword) {
         alert('Por favor, complete todos los campos.');
         return;
     }
@@ -87,14 +81,12 @@ const saveChanges = async () => {
 
     // Objeto con los datos del formulario
     const userData = {
-        id: userId,
         name: formData.name,
-        email: formData.email,
         password: formData.password
     };
 
     try {
-        const response = await axios.post(`http://localhost:8080/users`, userData);
+        const response = await axios.put(`http://localhost:8080/users/${userId}`, userData);
         console.log(response.data);
     } catch (error) {
         console.error('Error al enviar la solicitud POST:', error);
