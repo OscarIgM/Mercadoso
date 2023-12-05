@@ -79,55 +79,56 @@
         </div>
       </nav>
   </template>
-  <script>
-  import axios from 'axios';
 
-  export default {
-    props: ["nombreActivo"],
-    data() {
-      return {
-        categories :[],
-      };
-    },
-    mounted() {
-      this.fetchCategories();
-    },
-    methods: {
-      navegar(nombre) {
-        if (nombre === "LoginView") {
-          this.$router.push("/LoginView");
-        } else if (nombre === "MyPublish") {
-          this.$router.push("/ProfileView");
-        }
-        else if (nombre === "HomepagePublic"){
-          this.$router.push("/");
-        }
-        else if (nombre === "SignupView"){
-          this.$router.push("/SignupView");
-        }
-      },
-      fetchCategories() {
-      axios.get('http://localhost:8080/category')
-      .then(response => {
-        this.categories = response.data;
-      })
-      .catch(error => {
-        console.error('Error fetching categories: ', error);
-      });
-      },
-      seleccionarCategoria(category) {
-       console.log('Category selected:', category);
-      },
-    },
-    };
-    
-  
-  </script>
-    <script setup>
-    import { RouterLink } from 'vue-router';
-      import IconPublich from './icons/IconPublish.vue';
-      import IconProfile from './icons/IconProfile.vue';
-    </script>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';  // Cambiado de useRoute a useRouter
+import axios from 'axios';
+import IconPublich from './icons/IconPublish.vue';
+import IconProfile from './icons/IconProfile.vue';
+
+const nombreActivo = defineProps(["nombreActivo"]);
+
+const categories = ref([]);
+
+const router = useRouter();  // Usar useRouter en lugar de useRoute
+
+const navegar = (nombre) => {
+  if (nombre === "LoginView") {
+    router.push("/LoginView");
+  } else if (nombre === "MyPublish") {
+    router.push("/ProfileView");
+  } else if (nombre === "HomepagePublic") {
+    router.push("/");
+  } else if (nombre === "SignupView") {
+    router.push("/SignupView");
+  }
+};
+
+const fetchCategories = () => {
+  axios.get('http://localhost:8080/category')
+    .then(response => {
+      categories.value = response.data;
+    })
+    .catch(error => {
+      console.error('Error fetching categories: ', error);
+    });
+};
+
+const seleccionarCategoria = (category) => {
+  if (category && category.name) {
+    console.log('Category selected:', category);
+    router.push({ name: 'SearchCategory', params: { category: category.name } });
+  } else {
+    console.error('Invalid category:', category);
+  }
+};
+
+onMounted(() => {
+  fetchCategories();
+});
+</script>
+
 
     
 

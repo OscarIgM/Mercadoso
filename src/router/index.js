@@ -23,6 +23,10 @@ const router = createRouter({
         path:'/SignupView',
         name:'SignupView',
         component: ()=>import('../views/Public/SignupView.vue')
+      },{
+        path:'/SearchCategory/:category',
+        name:'SearchCategory',
+        component: ()=>import('../views/Public/SearchCategory.vue')
       },
       //LOGEADAS
       {
@@ -112,7 +116,7 @@ meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
   meta: { requiresAuth: true, isAdmin: true }
 },
 {
-  path:'/ProductoAdmin',
+  path:'/ProductoAdmin/:id',
   name:'ProductoAdmin',
   component:()=>import('../views/Admin/ProductoAdmin.vue'),
   meta: { requiresAuth: true, isAdmin: true }
@@ -130,6 +134,10 @@ router.beforeEach((to, from, next) => {
   const store = useStore();
   const isAuthenticated = store.getters.isAuthenticated;
   const userRole = isAuthenticated ? store.getters.role : null;
+  if (to.name === 'SearchCategory') {
+    // Si la ruta es 'FilterProductsPublic', permitir el acceso sin restricciones
+    next();
+  } else {
   // Rutas públicas
   if (!to.meta.requiresAuth) {
     if (!isAuthenticated) {
@@ -160,6 +168,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   }
+}
 });
 
 
