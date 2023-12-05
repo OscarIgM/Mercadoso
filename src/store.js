@@ -52,6 +52,7 @@ const store = createStore({
       try{
         commit('clearAuthData');
         console.log("Cierre sesión exitoso");
+        router.push({ name: 'HomepagePublic.vue' });
       } catch (error) {
         console.log("Error al cerrar sesión", error);
       }
@@ -78,6 +79,10 @@ const store = createStore({
     id: (state) => {
       const decodedToken = jwtDecode(state.token);
       return decodedToken.id;
+    },
+    role: (state) => {
+      const decodedToken = jwtDecode(state.token);
+      return decodedToken.role;
     }
   },
   // Verificación de autenticación al crear la tienda

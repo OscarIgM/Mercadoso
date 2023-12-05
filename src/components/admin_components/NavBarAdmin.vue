@@ -57,15 +57,7 @@
                 <button class="btn btn-outline-success" type="submit">
                   Buscar
                 </button>
-              </form>
-              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">
-                    <IconMessages></IconMessages>
-                     Mensajes
-                  </a>
-                </li>
-              </ul>         
+              </form>        
               <ProfileButton :isAdmin="true"></ProfileButton>
             </div>
           </div>
@@ -76,14 +68,10 @@
 import axios from 'axios';
 
 export default {
-  props: ["nombreActivo"],
   data() {
-    return {
-      categories: [],
+    return{
+      nombreActivo: 'HomeAdmin',
     };
-  },
-  mounted() {
-    this.fetchCategories();
   },
   methods: {
     navegar(nombre) {
@@ -98,19 +86,7 @@ export default {
           else if (nombre === "CarritoLoggedView"){
             this.$router.push("/CarritoLoggedView");
           }
-        },
-    fetchCategories() {
-      axios.get('http://localhost:8080/category')
-        .then(response => {
-          this.categories = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching categories: ', error);
-        });
-    },
-    seleccionarCategoria(category) {
-      console.log('Category selected:', category);
-    },      
+        },   
   },
 };
     </script>
@@ -119,5 +95,32 @@ export default {
     import IconMessages from '../icons/IconMessages.vue';
     import ProfileButton from '../ProfileButton.vue';
     import ProfileConfiguration from '../ProfileConfiguration.vue';
-    import { RouterLink } from 'vue-router';
+    import { RouterLink, useRouter } from 'vue-router';
+    import { ref, onMounted } from 'vue';
+
+    const router = useRouter();
+    const categories = ref([]);
+
+    const fetchCategories = () => {
+    axios.get('http://localhost:8080/category')
+      .then(response => {
+        categories.value = response.data;
+      })
+      .catch(error => {
+        console.error('Error fetching categories: ', error);
+      });
+    };
+
+    const seleccionarCategoria = (category) => {
+      if (category && category.name) {
+        console.log('Category selected:', category);
+        router.push({ name: 'SearchCategory', params: { category: category.name } });
+      } else {
+        console.error('Invalid category:', category);
+      }
+    };
+
+    onMounted(() => {
+      fetchCategories();
+    });
     </script>

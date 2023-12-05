@@ -99,15 +99,12 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   data() {
     return {
       nombreActivo: 'HomepageLogged', // Define el valor de nombreActivo
-      categories :[],
     };
-  },
-  mounted() {
-    this.fetchCategories();
   },
   props: {
     searchTerm: String,
@@ -116,23 +113,12 @@ export default {
     searchProducts() {
         this.$emit('search'); // Emit the search event
     },
-    fetchCategories() {
-      axios.get('http://localhost:8080/category')
-      .then(response => {
-        this.categories = response.data;
-      })
-      .catch(error => {
-        console.error('Error fetching categories: ', error);
-      });
-    },
-    seleccionarCategoria(category) {
-      console.log('Category selected:', category);
-    },
   },
 };
 </script> 
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
 import IconMessages from './icons/IconMessages.vue';
 import IconCarrito from './icons/IconCarrito.vue';
 import IconMiCompra from './icons/IconMiCompra.vue';
@@ -140,5 +126,31 @@ import IconPublish from './icons/IconPublish.vue';
 import IconMyPublication from './icons/IconMyPublication.vue';
 import ProfileConfiguration from './ProfileConfiguration.vue';
 import ProfileButton from './ProfileButton.vue';
+
+const router = useRouter();
+const categories = ref([]);
+
+const fetchCategories = () => {
+  axios.get('http://localhost:8080/category')
+    .then(response => {
+      categories.value = response.data;
+    })
+    .catch(error => {
+      console.error('Error fetching categories: ', error);
+    });
+};
+
+const seleccionarCategoria = (category) => {
+  if (category && category.name) {
+    console.log('Category selected:', category);
+    router.push({ name: 'SearchCategory', params: { category: category.name } });
+  } else {
+    console.error('Invalid category:', category);
+  }
+};
+
+onMounted(() => {
+  fetchCategories();
+});
 </script>
     
