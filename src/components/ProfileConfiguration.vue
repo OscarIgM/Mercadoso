@@ -60,6 +60,7 @@
 <script setup>
 import axios from 'axios';
 import { useStore } from 'vuex';
+import {reactive} from 'vue';
 
 const store = useStore();
 const userId = store.getters.id;
