@@ -46,8 +46,8 @@
             <form 
             class="d-flex" 
             role="search" 
-            @submit.prevent="searchProducts">
-            <input :value="searchTerm" @input="searchTerm = $event" 
+            @submit.prevent="buscarProductos">
+            <input v-model="query" 
             class="form-control me-2" 
             type="search" 
             placeholder="Buscar" 
@@ -133,6 +133,7 @@ import ProfileButton from './ProfileButton.vue';
 
 const router = useRouter();
 const categories = ref([]);
+const query = ref('');
 
 const fetchCategories = () => {
   axios.get('http://localhost:8080/category')
@@ -156,5 +157,16 @@ const seleccionarCategoria = (category) => {
 onMounted(() => {
   fetchCategories();
 });
+
+const buscarProductos = async () => {
+      try {
+        console.log('buscar:', query.value);
+        await router.push({ name: 'SearchBar', params: { query: query.value }
+       });
+        console.log('Después de redirigir');
+      } catch (error) {
+        console.error('Error al buscar productos:', error);
+    }
+  };
 </script>
     

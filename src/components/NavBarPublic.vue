@@ -44,8 +44,9 @@
                 </ul>
               </li>
             </ul>
-            <form class="d-flex" role="search">
+            <form class="d-flex" @submit.prevent="buscarProductos">
               <input
+                v-model="query"
                 class="form-control me-2"
                 type="search"
                 placeholder="Buscar"
@@ -82,16 +83,15 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';  // Cambiado de useRoute a useRouter
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 import IconPublich from './icons/IconPublish.vue';
 import IconProfile from './icons/IconProfile.vue';
 
 const nombreActivo = defineProps(["nombreActivo"]);
-
 const categories = ref([]);
-
-const router = useRouter();  // Usar useRouter en lugar de useRoute
+const router = useRouter();
+const query = ref('');
 
 const navegar = (nombre) => {
   if (nombre === "LoginView") {
@@ -127,6 +127,19 @@ const seleccionarCategoria = (category) => {
 onMounted(() => {
   fetchCategories();
 });
+
+    
+
+const buscarProductos = async () => {
+      try {
+        console.log('buscar:', query.value);
+        await router.push({ name: 'SearchBar', params: { query: query.value }
+       });
+        console.log('Después de redirigir');
+      } catch (error) {
+        console.error('Error al buscar productos:', error);
+    }
+  };
 </script>
 
 
