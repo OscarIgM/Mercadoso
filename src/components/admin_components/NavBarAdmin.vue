@@ -15,17 +15,6 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
@@ -47,8 +36,9 @@
                 </ul>
                 </li>
               </ul>
-              <form class="d-flex" role="search">
+              <form class="d-flex" @submit.prevent="buscarProductos">
                 <input
+                  v-model="query"
                   class="form-control me-2"
                   type="search"
                   placeholder="Buscar"
@@ -95,11 +85,13 @@ export default {
     import IconMessages from '../icons/IconMessages.vue';
     import ProfileButton from '../ProfileButton.vue';
     import ProfileConfiguration from '../ProfileConfiguration.vue';
-    import { RouterLink, useRouter } from 'vue-router';
+    import { RouterLink, useRouter, useRoute } from 'vue-router';
     import { ref, onMounted } from 'vue';
+
 
     const router = useRouter();
     const categories = ref([]);
+    const query = ref('');
 
     const fetchCategories = () => {
     axios.get('http://localhost:8080/category')
@@ -119,8 +111,22 @@ export default {
         console.error('Invalid category:', category);
       }
     };
+    
+
+    const buscarProductos = async () => {
+      try {
+        console.log('buscar:', query.value);
+        await router.push({ name: 'SearchBar', params: { query: query.value }
+       });
+        console.log('Después de redirigir');
+      } catch (error) {
+        console.error('Error al buscar productos:', error);
+    }
+  };
 
     onMounted(() => {
       fetchCategories();
     });
+
+    
     </script>

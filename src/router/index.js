@@ -24,6 +24,10 @@ const router = createRouter({
         name:'SignupView',
         component: ()=>import('../views/Public/SignupView.vue')
       },{
+        path:'/SearchBar/:query',
+        name:'SearchBar',
+        component: ()=>import('../views/Public/SearchBar.vue')
+      },{
         path:'/SearchCategory/:category',
         name:'SearchCategory',
         component: ()=>import('../views/Public/SearchCategory.vue')
@@ -134,7 +138,7 @@ router.beforeEach((to, from, next) => {
   const store = useStore();
   const isAuthenticated = store.getters.isAuthenticated;
   const userRole = isAuthenticated ? store.getters.role : null;
-  if (to.name === 'SearchCategory') {
+  if (to.name === 'SearchCategory' || to.name === 'SearchBar') {
     // Si la ruta es 'FilterProductsPublic', permitir el acceso sin restricciones
     next();
   } else {
