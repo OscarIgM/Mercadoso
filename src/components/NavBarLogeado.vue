@@ -85,6 +85,10 @@
                 <IconMiCompra></IconMiCompra> Mis compras
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'misventas' }" class="nav-link active" :class="{ active: nombreActivo === 'misventas' }">
+             Mis Ventas </router-link>
+            </li>
           </ul>
           <li class="nav-link active">
             <ProfileButton></ProfileButton>

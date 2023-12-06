@@ -10,7 +10,6 @@
                     @producto-eliminado="eliminarProducto" @actualizar-cantidad="actualizarCantidadProducto">
                 </ProductoMyPublish>
                 <hr>
-
             </div>
         </div>
         <div class="col-4">

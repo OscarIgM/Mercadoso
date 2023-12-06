@@ -23,8 +23,7 @@
           </div>
         </div>
         <div id="progreso" class="col-9">
-          <order_status :order_status="orden.orderStatus" />
-
+          <order_status v-model="orden.orderStatus" @statusChanged="setStatus" />
           <div class="row" style="margin-top: 2%;">
             <div class="col-8"></div>
             <div class="col-4">
@@ -49,6 +48,12 @@
   const { orden } = defineProps(['orden']);
   const userId=store.getters.id;
   const activeIndex = ref(0);
+
+  const setStatus = async (newStatus) => {
+await axios.put(`http://localhost:8080/purchase-orders/set-status?status=${newStatus}&orderId=${orden.id}`);
+    console.log('Nuevo estado:', newStatus);
+};
+
   
   console.log("item que obtenemos", orden.items);
   console.log("estado orden", orden.orderStatus);

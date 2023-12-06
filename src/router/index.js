@@ -33,79 +33,85 @@ const router = createRouter({
         path: '/CarritoLogged',
         name: 'CarritoLogged',
         component: () => import('../views/Logged/CarritoLogged.vue'),
-        meta: { requiresAuth: true, isUser: true } // Esta ruta requiere autenticación
+        meta: { requiresAuth: true, isUser: true } 
       },
     {
       path:'/ProfileView',
       name:'ProfileView',
       component:()=>import('../views/ProfileView.vue'),
-      meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+      meta: { requiresAuth: true, isUser: true }  
 
     },{
       path:'/MessageView',
       name:'MessageView',
       component:()=>import('../views/MessageView.vue'),
-      meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+      meta: { requiresAuth: true, isUser: true }  
 
     },{
     path:'/MisPublicaciones',
     name:'MisPublicaciones',
     component:()=>import('../views/Logged/MisPublicaciones.vue'),
-    meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+    meta: { requiresAuth: true, isUser: true }
 
   },
     {
       path:'/CarritoViewPublic',
       name:'CarritoViewPublic',
       component:()=>import('../views/Public/CarritoViewPublic.vue'),
-      meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+      meta: { requiresAuth: true, isUser: true }  
 
     },
       {
         path:'/HomepageLogged',
         name:'HomepageLogged',
         component:()=>import('../views/Logged/HomepageLogged.vue'),
-        meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+        meta: { requiresAuth: true, isUser: true } 
 
       },
       {
         path:'/CalificacionCompraLogged',
         name:'CalificacionCompraLogged',
         component:()=>import('../views/Logged/CalificacionCompraLogged.vue'),
-        meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+        meta: { requiresAuth: true, isUser: true }  
 
       },
       
     {path:'/MisCompras',
   name: 'MisCompras',
 component:()=>import('../views/Logged/MisCompras.vue'),
-meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+meta: { requiresAuth: true, isUser: true }  
 
 },
 {
   path:'/CalificationsView',
 name:'CalificationsView',
 component:()=>import('../views/CalificationsView.vue'),
-meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+meta: { requiresAuth: true, isUser: true }  
 
 },
 {
   path:'/productlog/:id',
   name: 'ProductDetailLogged',
   component:()=>import('../views/Logged/ProductDetailLogged.vue'),
-  meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+  meta: { requiresAuth: true, isUser: true }  
 
+},
+{
+  path:'/misventas',
+  name: 'misventas',
+component:()=>import('../views/Logged/misventas.vue'),
+meta:{requiresAuth:true, isUser:true} 
 },
 {
   path:'/Publicar',
   name: 'Publicar',
   component:()=>import('../views/Logged/Publicar.vue'),
-  meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+  meta: { requiresAuth: true, isUser: true }  
 
 },{path:'/CarritoLoggedView',
  name: 'CarritoLoggedView'
 , component:()=>import('../views/Logged/CarritoLogged.vue'),
-meta: { requiresAuth: true, isUser: true }  // Esta ruta requiere autenticación
+meta: { requiresAuth: true, isUser: true }  
 
 },
 //ADMIN
@@ -135,34 +141,26 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = store.getters.isAuthenticated;
   const userRole = isAuthenticated ? store.getters.role : null;
   if (to.name === 'SearchCategory') {
-    // Si la ruta es 'FilterProductsPublic', permitir el acceso sin restricciones
     next();
   } else {
-  // Rutas públicas
   if (!to.meta.requiresAuth) {
     if (!isAuthenticated) {
-      next(); // Permite el acceso a rutas públicas si el usuario no está autenticado
+      next(); 
     } else {
-      // Redirige al usuario a su página principal si intenta acceder a rutas públicas estando autenticado
       next({ name: userRole === "ADMIN" ? 'HomeAdmin' : 'HomepageLogged' });
     }
   } else {
-    // Rutas logueadas
     if (to.meta.requiresAuth && !isAuthenticated) {
-      next({ name: 'LoginView' }); // Redirige al usuario al inicio de sesión si no está autenticado
+      next({ name: 'LoginView' }); 
     } else {
-      // Verifica el rol para las rutas logueadas
       if ("USER" !== userRole && "ADMIN" !== userRole) {
-        // Evita el acceso si el rol no coincide
         next(false);
       } else {
-        // Redirección específica para roles
         if (userRole === "ADMIN" && to.meta.isAdmin) {
-          next(); // Permite el acceso a rutas admin si el usuario es ADMIN
+          next(); 
         } else if (userRole === "USER" && to.meta.isUser) {
-          next(); // Permite el acceso a rutas de usuario si el usuario es USER
+          next(); 
         } else {
-          // Redirige al usuario a su página principal si intenta acceder a rutas no permitidas para su rol
           next({ name: userRole === "ADMIN" ? 'HomeAdmin' : 'HomepageLogged' });
         }
       }
