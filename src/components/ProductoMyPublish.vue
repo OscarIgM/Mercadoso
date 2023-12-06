@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-2">
-            <img :src="producto.image" style="width:130px;">
+            <img :src="imagenProducto" style="width:130px;">
         </div>
         <div class="col-10" style="padding-left: 5%;">
             <h4>{{ producto.name }}</h4>
@@ -22,7 +22,7 @@
 </template>
   
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { onMounted,ref,defineProps, defineEmits } from 'vue';
 import axios from 'axios';
 
 
@@ -56,6 +56,31 @@ const actualizarCantidad = async () => {
         console.error('Error al actualizar la cantidad del producto:', error);
     }
 };
+
+const imagenProducto = ref('');
+const obtenerUrlImagen = async (imageId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/google-drive/obtainImage?id=${imageId}`, {
+      responseType: 'arraybuffer',
+    });
+
+    const base64 = btoa(
+      new Uint8Array(response.data).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    );
+    const url = `data:${response.headers['content-type'].toLowerCase()};base64,${base64}`;
+    imagenProducto.value = url;
+  } catch (error) {
+    console.error('Error al obtener la imagen', error);
+    // Puedes manejar el error o mostrar una imagen por defecto
+    imagenProducto.value = 'URL_IMAGEN_POR_DEFECTO';
+  }
+};
+onMounted(() => {
+  obtenerUrlImagen(producto.imageId);
+});
 
 </script>
 

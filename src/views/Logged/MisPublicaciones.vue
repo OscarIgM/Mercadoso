@@ -87,7 +87,7 @@ const actualizarCantidadProducto = ({ productId, newQuantity }) => {
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`http://localhost:8080/users/${store.state.usuario.id}/products`);
+        const response = await axios.get(`http://localhost:8080/users/${store.getters.id}/products`);
         productos.value = response.data;
     } catch (error) {
         console.error('Error al obtener productos publicados:', error);
