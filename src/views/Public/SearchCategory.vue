@@ -35,7 +35,7 @@
   </template>
 <script setup>
   import axios from 'axios';  
-  import { ref } from 'vue';
+  import { ref, onMounted ,watch } from 'vue';
   import { useRoute } from 'vue-router';
   import NavBarPublic from '../../components/NavBarPublic.vue';
   import AnunciosCards from '../../components/AnunciosCards.vue';
@@ -46,19 +46,30 @@
   import NavBarLogeado from '../../components/NavBarLogeado.vue';
   import AnuncioCardAdmin from '../../components/admin_components/AnuncioCardAdmin.vue';
 
-const store = useStore();
+  const store = useStore();
   const route = useRoute();
   const category = ref(route.params.category);
   const productos = ref([]);
 
-(async () => {
-  try {    
+  const fetchProductos = async () => {
+  try {
     const response = await axios.get(`http://localhost:8080/products/filterByCategory/${category.value}`)
-      productos.value = response.data;
+    productos.value = response.data;
   } catch (error) {
-      console.error('Error fetching products:', error);
+    console.error('Error fetching products:', error);
   }
-})();
+};
+
+// Cargar productos cuando se monta el componente
+onMounted(fetchProductos);
+
+// Watcher para observar cambios en la categoría
+watch(() => route.params.category, async (newCategory, oldCategory) => {
+  if (newCategory !== oldCategory) {
+    category.value = newCategory;
+    await fetchProductos();
+  }
+});
 </script>
 
 
