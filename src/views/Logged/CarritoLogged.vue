@@ -72,28 +72,37 @@ const actualizarCantidadProducto = ({ productId, newQuantity }) => {
 
 onMounted(async () => {
   try {
-    console.log(userId);
     const response = await axios.get(`http://localhost:8080/shopping-cart/${userId}`);
+     
     productos.value = response.data;
+
+    console.log(productos.value)
   } catch (error) {
     console.error('Error al obtener productos publicados:', error);
   }
 });
 
 
-// Realizar compra carrito
-// Realizar compra carrito
 const realizarCompra = async () => {
   try {
-    console.log('La id enviada es', userId);
     const enviar = parseInt(userId);
-    const response = await axios.post(`http://localhost:8080/purchase-orders/createOrder/${enviar}`);
-    console.log('Compra realizada con éxito:', response.data);
-    // Muestra un mensaje al usuario o realiza otras acciones según la respuesta del servidor
+
+    for (const product of productos.value) {
+      console.log('La id enviada es', product.product.user.id,enviar,product.id.productId );
+
+    const createChat = await axios.post(`http://localhost:8080/chat/create`, {
+  sellerId: product.product.user.id,
+  buyerId: enviar,
+  productId: product.id.productId
+});   
+ console.log("chat creado", createChat);
+    }
+
+   const response = await axios.post(`http://localhost:8080/purchase-orders/createOrder/${enviar}`);
+
     productos.value = [];
   } catch (error) {
     console.error('Error al realizar la compra:', error);
-    // Muestra un mensaje de error al usuario o realiza otras acciones según el error
   }
 };
 

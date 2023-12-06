@@ -1,88 +1,92 @@
 <template>
-    <div class="col-9 mt-5 ms-5">
-                <div class="container" style="height: 100%;">
-                    <div class="d-flex flex-column justify-content-between p-2" style="height: 100%;">
-                        <div class="d-flex flex-column m-5">
-                            <div class="d-flex flex-row mb-5">
-                                <p class="text-primary" style="font-weight: bold;">Nombre Usuario 1</p>
-                                <p class="mx-5">Texto de prueba?</p>
-                            </div>
-                            <div class="d-flex flex-row mb-5">
-                                <p class="text-primary" style="font-weight: bold;">Nombre Usuario</p>
-                                <p class="mx-5">Texto de prueba?</p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row justify-content-center my-5">
-                            <textarea class="form-control border border-secondary" rows="1" id="comment" name="text">Aaa</textarea>
-                            <button class="btn btn-primary ms-2 rounded-5"><i class="bi bi-send"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </template>
-    
-    <script setup>
-    import { RouterLink, useRouter as useVueRouter } from "vue-router";
+  <div class="col-9 mt-5 ms-5">
+    <div class="container chat-container">
+      <div class="d-flex flex-column justify-content-between p-2" style="height: 100%;">
+        <div class="d-flex flex-column m-5">
+          <div v-if="chat && chat.messages" v-for="message in chat.messages" :key="message.timestamp" class="d-flex flex-row mb-5">
+            <p v-if="message.senderName" class="text-primary" style="font-weight: bold;">{{ message.senderName }}</p>
+            <p class="mx-5">{{ message.content }}</p>
+          </div>
+        </div>
+        <div class="d-flex flex-row justify-content-center my-5">
+          <textarea class="form-control border border-secondary" rows="1" v-model="newMessage" placeholder="Escribe tu mensaje"></textarea>
+          <button class="btn btn-primary ms-2 rounded-5" @click="sendMessage"><i class="bi bi-send"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
 import axios from "axios";
-import { ref } from 'vue';
+import { defineProps, ref, watch, onMounted } from 'vue';
 import { useStore } from 'vuex';
-const router = useVueRouter(); // Obtén acceso al enrutador
-const store = useStore(); // Obtén acceso a la store Vuex
 
-    const connectWebSocket = () => {
-      ws = new WebSocket('ws://localhost:8080/ws');
-    
-      ws.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        console.log('Mensaje recibido:', message);
-      };
-    
-      ws.onclose = () => {
-        console.log('Conexión cerrada');
-      };
-    };
-    
-    let ws;
-    let newMessage = '';
-    let users = [
-      { id: 'userId1', username: 'Nombre Usuario 1' },
-      { id: 'userId2', username: 'Nombre Usuario 2' },
-      // Agrega más usuarios según sea necesario
-    ];
-    let user1=store.getters.usuario; // Define la variable user1
-    async function getUsers() {
-      user1 = await axios.get('http://localhost:8080/users/{user1}');
+const store = useStore();
+const userId = store.getters.id;
+const newMessage = ref(''); 
+const { chat } = defineProps(['chat']);
+
+// Utilizamos ref para hacer chat.messages reactivo
+const messages = ref(chat.messages);
+
+watch(() => chat.messages, (newMessages) => {
+  // Actualizamos la referencia messages con los nuevos mensajes
+  messages.value = newMessages;
+  // Luego obtenemos los nombres de los remitentes para los nuevos mensajes
+  getSenderNamesForMessages();
+});
+
+onMounted(async () => {
+  // Cuando el componente se monta, obtenemos el nombre del remitente para cada mensaje
+  await getSenderNamesForMessages();
+});
+
+async function getSenderNamesForMessages() {
+  // Utilizamos Promise.all para realizar las solicitudes en paralelo para mejorar la eficiencia
+  const promises = messages.value.map(async (message) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/users/${message.senderId}`);
+      const sender = response.data;
+      message.senderName = sender.username; // Agregamos el nombre del remitente al mensaje
+    } catch (error) {
+      console.error('Error al cargar información del remitente', error);
+      message.senderName = 'Desconocido';
     }
-    
-    connectWebSocket();
+  });
 
-    async function getChatMessages(senderId, recipientId) {
-  try {
-    const response = await axios.get(`http://localhost:8080/chatroom/messages/${senderId}/${recipientId}`);
-    const chatMessages = response.data;
-    // Maneja los mensajes obtenidos, puedes almacenarlos en una variable de estado, por ejemplo.
-  } catch (error) {
-    console.error('Error al cargar mensajes de chat', error);
-  }
+  await Promise.all(promises);
 }
 
-
-    
-    const sendMessage = async () => {
-  const recipientId = stor; // Reemplaza con la lógica para obtener el destinatario
-  const message = {
-    content: newMessage,
-    sender: 'Nombre de Usuario Actual',
-    recipientId,
-  };
-
+async function sendMessage() {
   try {
-    // Llama a tu endpoint de backend para enviar el mensaje
-    await axios.post('http://localhost:8080/chatroom/messages', message);
+    const response = await axios.post('http://localhost:8080/chat/sendMessage', null, {
+      params: {
+        roomId: chat.id,
+        senderId: userId.toString(),
+        content: newMessage.value,
+      },
+    });
+
+    // Assuming the server responds with the updated chat
+    const updatedChat = response.data; // Assuming the response is the updated chat object
+
+    // Chat.messages ya está siendo observado por el watcher, no es necesario actualizarlo aquí
+
+    // Obtener los nombres de los remitentes para los nuevos mensajes
+    await getSenderNamesForMessages();
+
+    // Clear the input field
+    newMessage.value = '';
   } catch (error) {
     console.error('Error al enviar el mensaje', error);
   }
-};
+}
+</script>
 
-    </script>
-    
+<style scoped>
+.chat-container {
+  overflow-y: auto;
+  max-height: 600px; /* Ajusta según sea necesario */
+}
+</style>
