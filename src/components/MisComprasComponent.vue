@@ -41,9 +41,10 @@
   import order_status from "./mini_components/order_status.vue";
   import { defineProps, ref } from 'vue';
   import axios from 'axios';
-  import { RouterLink } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import ProductMisComprasComponent from './ProductMisComprasComponent.vue';
   import { useStore } from 'vuex';
+  const router = useRouter();
   const store = useStore();
   const { orden } = defineProps(['orden']);
   const userId=store.getters.id;
@@ -80,7 +81,7 @@ console.log("la id de la orden es", orden.id);
 try {
   await axios.delete(`http://localhost:8080/purchase-orders/${userId}/${orden.id}`);
   console.log("Recepcion confirmada eliminar todo");
-  
+  window.location.reload();
 } catch (error) {
   console.log("no se pudo realizar la recepcion");
 }

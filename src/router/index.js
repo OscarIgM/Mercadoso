@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomepagePublic from '../views/Public/HomepagePublic.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomepagePublic from '../views/Public/HomepagePublic.vue';
 import { useStore } from 'vuex';
 
 const router = createRouter({
@@ -144,12 +144,8 @@ router.beforeEach((to, from, next) => {
   const store = useStore();
   const isAuthenticated = store.getters.isAuthenticated;
   const userRole = isAuthenticated ? store.getters.role : null;
-<<<<<<< HEAD
-  if (to.name === 'SearchCategory') {
-=======
   if (to.name === 'SearchCategory' || to.name === 'SearchBar') {
     // Si la ruta es 'FilterProductsPublic', permitir el acceso sin restricciones
->>>>>>> 8eff22f0fc5920c7dd8f34372b45949708883e87
     next();
   } else {
   if (!to.meta.requiresAuth) {

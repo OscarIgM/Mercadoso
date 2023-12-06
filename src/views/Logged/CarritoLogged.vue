@@ -43,6 +43,7 @@ import { useStore } from 'vuex';
 import { ref } from 'vue';
 import axios from 'axios';
 import { onMounted } from 'vue';
+import router from '../../router';
 
 
 const store = useStore();
@@ -96,6 +97,7 @@ const realizarCompra = async () => {
   productId: product.id.productId
 });   
  console.log("chat creado", createChat);
+ router.push('MessageView');
     }
 
    const response = await axios.post(`http://localhost:8080/purchase-orders/createOrder/${enviar}`);
